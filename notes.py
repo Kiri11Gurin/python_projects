@@ -2353,7 +2353,7 @@ class ElectricCar:
         return self._owner  # если имя атрибута начинается с одного нижнего подчеркивания, то он считается защищенным
 
     @owner.setter  # сеттер
-    def owner(self, owner):
+    def owner(self, owner):  # имена методов сеттера, геттера и делитера должны совпадать
         print(f'вызов свойства owner (сеттер) для {owner}')
         if isinstance(owner, str) and owner.isalpha():
             self._owner = owner
@@ -2409,6 +2409,61 @@ print(ElectricCar.num_of_cars())  # 4
 print(ElectricCar.fuel_consumption(1000))  # 200.0 liters of gasoline
 car4 = ElectricCar.defined_owner()
 print(car4.owner)  # Noah
+# Если в классе задан атрибут как объект-свойство, то в первую очередь выбирается оно,
+# даже если в экземпляре класса есть локальное свойство с таким же именем:
+car4.__dict__['owner'] = 'Kirill'
+print(car4.__dict__, car4.owner)  # {'_owner': 'Noah', 'owner': 'Kirill'} Noah
+
+
+# протокол дескрипторов
+# магические метода __get__(), __set__(), __delete__(), __set_name__()
+# Дескриптор - объект, чьё поведение при доступе к нему как к атрибуту переопределяется методами протокола дескрипторов.
+class NonNegativeInteger:
+    def __init__(self, default=None):
+        self.default = default
+
+    def __set_name__(self, cls, name):               # Позволяет неявно использовать имя переменной
+        print(f'вызов метода __set_name__ для: {cls = }, {name = }')   # в качестве имени атрибута,
+        self.name = name                                   # за которым будет закреплён дескриптор.
+
+    def __get__(self, obj, cls):
+        print(f'вызов метода __get__ для: {obj = }, {cls = }')
+        if obj is None:  # нужно, чтобы не было ошибки при обращении к дескриптору через сам класс
+            return self
+        if self.name in obj.__dict__:
+            return obj.__dict__[self.name]
+        elif self.default is None:
+            raise AttributeError('Атрибут не найден')
+        else:
+            return self.default
+
+    def __set__(self, obj, value):  # Если метод __set__() не определён, то дескриптор является дескриптором не-данных
+        print(f'вызов метода __set__ для: {obj = }, {value = }')  # (non-data descriptor) и строка student.score будет
+        if isinstance(value, int) and value >= 0:  # обращаться к атрибуту score, а не к дескриптору, аналогично
+            obj.__dict__[self.name] = value  # и self.score = score приведёт к установке объекту self атрибута score.
+        else:
+            raise ValueError('Некорректное значение')
+
+    def __delete__(self, obj):
+        print(f'вызов метода __delete__ для: {obj = }')
+        del obj.__dict__[self.name]
+
+
+class Student:
+    score = NonNegativeInteger(50)
+    score2 = 37
+
+
+student = Student()
+print(student.score)  # 50
+print(student.score2)  # 37
+student.score = 100
+print(student.score)  # 100
+print(student.__dict__)  # {'score': 100}
+print(Student.score)  # <__main__.NonNegativeInteger object at 0x0000022EFFE2BFD0>
+print(Student.score.__class__)  # <class '__main__.NonNegativeInteger'>
+del student.score
+print(student.__dict__)  # {}
 
 
 # строковое представление объектов класса
@@ -2878,57 +2933,6 @@ with tree:
     with tree:
         tree.add(5)
 print(tree.structure())  # [[1, 2, [3, [4]], [5]]]
-
-
-# протокол дескрипторов
-# магические метода __get__(), __set__(), __delete__(), __set_name__()
-# Дескриптор - объект, чьё поведение при доступе к нему как к атрибуту переопределяется методами протокола дескрипторов.
-class NonNegativeInteger:
-    def __init__(self, default=None):
-        self.default = default
-
-    def __set_name__(self, cls, name):               # Позволяет неявно использовать имя переменной
-        print(f'вызов метода __set_name__ для: {cls = }, {name = }')   # в качестве имени атрибута,
-        self.name = name                                   # за которым будет закреплён дескриптор.
-
-    def __get__(self, obj, cls):
-        print(f'вызов метода __get__ для: {obj = }, {cls = }')
-        if obj is None:  # нужно, чтобы не было ошибки при обращении к дескриптору через сам класс
-            return self
-        if self.name in obj.__dict__:
-            return obj.__dict__[self.name]
-        elif self.default is None:
-            raise AttributeError('Атрибут не найден')
-        else:
-            return self.default
-
-    def __set__(self, obj, value):  # Если метод __set__() не определён, то дескриптор является дескриптором не-данных
-        print(f'вызов метода __set__ для: {obj = }, {value = }')  # (non-data descriptor) и строка student.score будет
-        if isinstance(value, int) and value >= 0:  # обращаться к атрибуту score, а не к дескриптору, аналогично
-            obj.__dict__[self.name] = value  # и self.score = score приведёт к установке объекту self атрибута score.
-        else:
-            raise ValueError('Некорректное значение')
-
-    def __delete__(self, obj):
-        print(f'вызов метода __delete__ для: {obj = }')
-        del obj.__dict__[self.name]
-
-
-class Student:
-    score = NonNegativeInteger(50)
-    score2 = 37
-
-
-student = Student()
-print(student.score)  # 50
-print(student.score2)  # 37
-student.score = 100
-print(student.score)  # 100
-print(student.__dict__)  # {'score': 100}
-print(Student.score)  # <__main__.NonNegativeInteger object at 0x0000022EFFE2BFD0>
-print(Student.score.__class__)  # <class '__main__.NonNegativeInteger'>
-del student.score
-print(student.__dict__)  # {}
 
 
 # магический метод __new__()
