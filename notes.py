@@ -2260,6 +2260,8 @@ print(car.__dict__)  # выводит атрибуты только экземп
 print(getattr(car, 'color'))  # black
 print(getattr(car, 'engine_type', 'no attr'))  # electric motor
 print(getattr(car, 'volume', 'no attr'))  # no attr
+print(type(car), type(car).__name__)  # <class '__main__.ElectricCar'> ElectricCar
+print(car.__class__, car.__class__.__name__)  # <class '__main__.ElectricCar'> ElectricCar
 
 
 # Методы класса фактически представляют собой функции, которые
@@ -2669,7 +2671,7 @@ print(hasattr(a, '__add__'))  # True
 print(dir(a))
 
 
-# вызываемые объекты, магический метод __call__()
+# вызываемые объекты, магический метод __call__() (альтернатива замыканию)
 class QuadraticPolynomial:
     def __init__(self, a, b, c):
         print(f'вызов метода __init__()')
@@ -2681,12 +2683,17 @@ class QuadraticPolynomial:
         print('вызов метода __call__()')
         return self.a * x ** 2 + self.b * x + self.c
 
+    def __abs__(self):
+        print(self.__dict__)
+        return sum(i ** 2 for i in self.__dict__.values()) ** 0.5
+
 
 func = QuadraticPolynomial(1, 2, 1)
 print(func(1))  # 4
 print(func(2))  # 9
 print(hasattr(func, '__call__'))  # True
 print(dir(func))
+print(abs(func))  # 2.449489742783178
 
 
 # магические методы __getattribute__(), __setattr__(), __delattr__()
