@@ -1,7 +1,7 @@
 class LinkedList:
-    def __init__(self):
-        self.head = None  # ссылка на первый объект связного списка (если список пустой, то head = None)
-        self.tail = None  # ссылка на последний объект связного списка (если список пустой, то tail = None)
+    def __init__(self, head=None, tail=None):
+        self.head = head  # ссылка на первый объект связного списка (если список пустой, то head = None)
+        self.tail = tail  # ссылка на последний объект связного списка (если список пустой, то tail = None)
 
     def add_obj(self, obj):
         """Метод добавляет новый объект obj класса ObjList в конец связного списка."""
