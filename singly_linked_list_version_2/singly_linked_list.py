@@ -1,3 +1,28 @@
+class Descriptor:
+    """Дескриптор для класса StackObj."""
+    def __set_name__(self, cls, name):
+        self.name = f'_{cls.__name__}__{name}'
+
+    def __get__(self, obj, cls):
+        if obj is None:
+            return self
+        if self.name in obj.__dict__:
+            return obj.__dict__[self.name]
+
+    def __set__(self, obj, value):
+        obj.__dict__[self.name] = value
+
+
+class StackObj:
+    """Класс представляет отдельный объект в односвязном списке."""
+    data = Descriptor()
+    next = Descriptor()
+
+    def __init__(self, data):
+        self.data = data  # ссылка на строку с переданными данными
+        self.next = None  # ссылка на следующий объект односвязного списка (если следующего нет, то __next = None)
+
+
 class Stack:
     """Класс управления односвязным списком в целом."""
     def __init__(self, top=None):
@@ -47,26 +72,3 @@ class Stack:
             result.append(last_obj.data)
             last_obj = last_obj.next
         return result
-
-
-class StackObj:
-    """Класс представляет отдельный объект в односвязном списке."""
-    def __init__(self, data):
-        self.data = data  # ссылка на строку с переданными данными
-        self.next = None  # ссылка на следующий объект односвязного списка (если следующего нет, то __next = None)
-
-    @property
-    def data(self):
-        return self.__data
-
-    @data.setter
-    def data(self, data):
-        self.__data = data
-
-    @property
-    def next(self):
-        return self.__next
-
-    @next.setter
-    def next(self, next):
-        self.__next = next
