@@ -2469,7 +2469,8 @@ print(student.__dict__)  # {}
 
 
 # строковое представление объектов класса
-# Если в классе определён метод __repr__(), но не определён метод __str__(), то по умолчанию repr() = str().
+# Если в классе определён метод __repr__(), но не определён метод __str__(),
+# то по умолчанию при вызове __str__ используется __repr__.
 class AnyClass:
     def __init__(self, **kwargs):
         print(f'вызов метода __init__() для {kwargs}')
@@ -2508,13 +2509,16 @@ print(dir(obj))
 from functools import total_ordering
 # Декоратор total_ordering нужен для того, чтобы определить метод __eq__
 # и один из методов: lt, le, gt, ge. Остальные определятся автоматически.
+# Если декоратор не реализован, то достаточно объявить eq, lt, le, остальные методы будут работать инверсионно:
+# - для obj1 != obj2 будет выполнено not (obj1 == obj2)
+# - для obj1 > obj2 будет выполнено obj2 < obj1 (операнды меняются местами)
 @total_ordering
 class ElectricCar:
     def __init__(self, power_reserve):
         print(f'вызов метода __init__() для {power_reserve}')
         self.power_reserve = power_reserve
 
-    def __eq__(self, other):
+    def __eq__(self, other):  # если метод не определён, то по умолчанию сравниваются id экземпляров класса
         print('вызов метода __eq__()')
         if isinstance(other, ElectricCar):  # аналогично isinstance(other, type(self))
             return self.power_reserve == other.power_reserve
@@ -2618,7 +2622,7 @@ class Vector:
     def __repr__(self):
         return f'Vector({self.x}, {self.y})'
 
-    def __add__(self, other):
+    def __add__(self, other):  # если __iadd__ не реализован, то используется __add__
         print('вызов метода __add__()')
         if isinstance(other, Vector):  # аналогично isinstance(other, type(self))
             return Vector(self.x + other.x, self.y + other.y)
@@ -2633,13 +2637,13 @@ class Vector:
             return self
         return NotImplemented
 
-    def __sub__(self, other):
+    def __sub__(self, other):  # если __isub__ не реализован, то используется __sub__
         print('вызов метода __sub__()')
         if isinstance(other, Vector):  # аналогично isinstance(other, type(self))
             return Vector(self.x - other.x, self.y - other.y)
         return NotImplemented
 
-    def __mul__(self, other):
+    def __mul__(self, other):  # если __imul__ не реализован, то используется __mul__
         print('вызов метода __mul__()')
         if isinstance(other, (int, float)):
             return Vector(self.x * other, self.y * other)
@@ -2649,7 +2653,7 @@ class Vector:
         print('вызов метода __rmul__()')
         return self.__mul__(other)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other):  # если __itruediv__ не реализован, то используется __truediv__
         print('вызов метода __truediv__()')
         if isinstance(other, (int, float)):
             return Vector(self.x / other, self.y / other)
