@@ -20,6 +20,10 @@ class GamePole:
 
     def init_pole(self):
         """Инициализация начального состояния игрового поля."""
+        for i in range(self.N):
+            for j in range(self.M):
+                self.pole[i][j].is_open = False
+                self.pole[i][j].is_mine = False
         coords = [(i, j) for i in range(self.N) for j in range(self.M)]
         for k in range(self.total_mines):
             i, j = random.choice(coords)
