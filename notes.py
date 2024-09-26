@@ -2743,16 +2743,16 @@ del user.login
 class Square:
     def __init__(self, n):  # конструктор класса, вызывается единожды при создании объекта
         self.n = n
-        self.number = 0
 
     def __iter__(self):  # Метод, который преобразует итерируемый объект в итератор (для итерируемых объектов),
-        return self      # либо возвращает сам итератор (сам себя).
+        self.zero = 0  # либо возвращает сам итератор (сам себя).
+        return self
 
     def __next__(self):  # метод, который возвращает следующий элемент или возбуждает исключение StopIteration
-        if self.number == self.n:
+        if self.zero == self.n:
             raise StopIteration  # без "raise StopIteration" получим бесконечный итератор
-        self.number += 1
-        return self.number ** 2
+        self.zero += 1
+        return self.zero ** 2
 
 
 squares = Square(10)
