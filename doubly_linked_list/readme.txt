@@ -38,6 +38,7 @@ lst.add_obj(ObjList("данные 3"))
 res = lst.get_data()    # ['данные 1', 'данные 2', 'данные 3']
 Объявите в программе классы LinkedList и ObjList в соответствии с заданием.
 
+
 # Тест для проверки:
 ls = LinkedList()
 ls.add_obj(ObjList("данные 1"))
