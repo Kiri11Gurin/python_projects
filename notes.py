@@ -2610,6 +2610,9 @@ print(-matrix)
 print(~matrix)
 print(hasattr(matrix, '__pos__'))  # True
 print(dir(matrix))
+methods = {k: v for k, v in Matrix.__dict__.items() if callable(v)}  # методы класса Matrix
+print(methods)
+print(Matrix.__dict__)
 
 
 # арифметические операции
@@ -2673,6 +2676,9 @@ a += b
 print(a)  # Vector(4, 6) (изменение текущего объекта)
 print(hasattr(a, '__add__'))  # True
 print(dir(a))
+methods = {k: v for k, v in Vector.__dict__.items() if callable(v)}  # методы класса Vector
+print(methods)
+print(Vector.__dict__)
 
 
 # вызываемые объекты, магический метод __call__() (альтернатива замыканию)
@@ -3017,8 +3023,8 @@ class Distance(float):  # При наследовании от неизменя�
 distance = Distance(1, 'Meters')
 print(distance)  # 1.0
 print(distance.unit)  # Meters
-print(issubclass(Distance, float))  # True
-print(isinstance(Distance, float))  # False
+print(issubclass(Distance, float))  # True (функция работает только с классами)
+print(isinstance(Distance, float))  # False (функция работает как с классами, так и с объектами классов)
 print(isinstance(distance, float))  # True
 print(type(Distance))  # <class 'type'>
 print(Distance)  # <class '__main__.Distance'>
@@ -3049,9 +3055,9 @@ class Cat(Animal):
 cat = Cat()
 cat.move()  # Кот движется
 cat.sound()  # мяу
-print(isinstance(Cat, Animal))  # False
+print(isinstance(Cat, Animal))  # False (функция работает как с классами, так и с объектами классов)
 print(isinstance(cat, Animal))  # True
-print(issubclass(Cat, Animal))  # True
+print(issubclass(Cat, Animal))  # True (функция работает только с классами)
 
 
 # множественное наследование
