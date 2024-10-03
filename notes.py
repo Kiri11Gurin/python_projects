@@ -3031,6 +3031,44 @@ print(Distance)  # <class '__main__.Distance'>
 print(type(distance))  # <class '__main__.Distance'>
 
 
+# наследование и атрибуты protected (одно нижнее подчёркивание) и private (два нижних подчёркивания)
+class Geom:
+    name = 'Geom'
+
+    def __init__(self, x1, y1, x2, y2):
+        print(f"инициализатор Geom для {self.__class__}")
+        self.__x1 = x1
+        self.__y1 = y1
+        self.__x2 = x2
+        self.__y2 = y2
+
+    @staticmethod
+    def __verify_coord(coord):
+        return 0 <= coord <= 100
+
+
+class Rect(Geom):
+    def __init__(self, x1, y1, x2, y2, fill='red'):
+        super().__init__(x1, y1, x2, y2)
+        self.__fill = fill
+
+    def get_coords(self):
+        return self.__x1, self.__y1, self.__x2, self.__y2
+
+    def _check(self, coord):
+        return super().__verify_coord(coord)  # приватность запрещает переопределение методов в дочерних классах
+
+
+r = Rect(0, 0, 10, 20)
+print(r.__dict__)  # {'_Geom__x1': 0, '_Geom__y1': 0, '_Geom__x2': 10, '_Geom__y2': 20, '_Rect__fill': 'red'}
+# Приватные атрибуты жестко привязываются к текущему классу, поэтому
+# нельзя обращаться к приватным свойствам-координатам в дочернем классе Rect:
+# print(r.get_coords())  # AttributeError
+# Если нужно определить закрытые атрибуты, доступные в текущем классе и во всех его дочерних классах,
+# то для этого следует использовать метод определения protected – одно нижнее подчеркивание.
+# print(r._check(50))  # AttributeError
+
+
 # абстрактные классы
 from abc import ABC, abstractmethod
 class Animal(ABC):
