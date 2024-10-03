@@ -3056,7 +3056,7 @@ class Rect(Geom):
         return self.__x1, self.__y1, self.__x2, self.__y2
 
     def _check(self, coord):
-        return super().__verify_coord(coord)  # приватность запрещает переопределение методов в дочерних классах
+        return super().__verify_coord(coord)  # запрещено переопределять приватные методы базового класса в дочернем
 
 
 r = Rect(0, 0, 10, 20)
