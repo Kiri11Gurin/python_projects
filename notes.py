@@ -2780,11 +2780,11 @@ class SkipIterator:
         return next(self.obj)
 
 
-skipiterator = SkipIterator([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2)  # пропускаем по два элемента
-print(next(skipiterator))  # 1
-print(*skipiterator)  # 4 7 10
-print(hasattr(skipiterator, '__next__'))  # True
-print(dir(skipiterator))
+skip_iterator = SkipIterator([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2)  # пропускаем по два элемента
+print(next(skip_iterator))  # 1
+print(*skip_iterator)  # 4 7 10
+print(hasattr(skip_iterator, '__next__'))  # True
+print(dir(skip_iterator))
 
 
 # протокол последовательностей
