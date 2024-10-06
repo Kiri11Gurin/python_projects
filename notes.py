@@ -3269,6 +3269,46 @@ print(obj.first_attr)  # 1
 print(obj.second_attr)  # 2
 
 
+def class_log(log_descriptor):
+    """Функцию-декоратор для класса, которая создаёт логирование вызовов методов
+    класса (добавляет в список log_descriptor все вызванные методы)."""
+    def decorator(method):
+        def wrapper(*args, **kwargs):
+            log_descriptor.append(method.__name__)
+            return method(*args, **kwargs)
+
+        return wrapper
+
+    def class_decorator(cls):
+        for k, v in cls.__dict__.items():
+            if callable(v):
+                setattr(cls, k, decorator(v))
+        return cls
+
+    return class_decorator
+
+
+vector_log = []
+
+
+@class_log(vector_log)
+class Vector:
+    def __init__(self, *args):
+        self.__coords = list(args)
+
+    def __getitem__(self, item):
+        return self.__coords[item]
+
+    def __setitem__(self, key, value):
+        self.__coords[key] = value
+
+
+v = Vector(1, 2, 3)
+v[0] = 10
+v[1]
+print(vector_log)  # ['__init__', '__setitem__', '__getitem__']
+
+
 # модуль dataclasses (автоматически реализуют: __init__(), __repr__() и __eq__())
 from dataclasses import dataclass, field, astuple, asdict
 # (frozen=False) атрибуты класса можно менять; (order=True) можно сравнить экземпляры класса >, <, <=, >= 
