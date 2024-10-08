@@ -3072,9 +3072,9 @@ print(r.__dict__)  # {'_Geom__x1': 0, '_Geom__y1': 0, '_Geom__x2': 10, '_Geom__y
 # абстрактные классы
 from abc import ABC, abstractmethod
 class Animal(ABC):
-    @abstractmethod
+    @abstractmethod  # все абстрактные методы дочерних классов должны быть переопределены, иначе будет ошибка TypeError
     def sound(self):
-        print('Не определен')
+        """В абстрактном методе можно оставлять только комментарий."""
 
     @abstractmethod
     def move(self):
