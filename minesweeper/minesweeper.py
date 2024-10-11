@@ -8,6 +8,9 @@ class GamePole:
             cls.__instance = super().__new__(cls)
         return cls.__instance
 
+    def __del__(self):
+        self.__class__.__instance = None
+    
     def __init__(self, N, M, total_mines):
         self.N = N
         self.M = M
