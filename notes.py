@@ -1196,7 +1196,10 @@ print(bool(''))  # пустая строка (список и т. д.) - "False"
 # однако необходимо помнить, что isinstance принимает True и False за int.
 print(isinstance([1, 2, 3], list))  # True
 print(isinstance(True, int))  # True (True & False относятся к int)
+print(isinstance(True, float))  # False
 print(isinstance(10.5, (int, float)))  # True (можно передать кортеж из типов)
+print(int(True), int(False))  # 1 0
+print(float(True), float(False))  # 1.0 0.0
 
 print(not [])  # not возвращает булево значение
 print(1 and [] and 3)  # возвращает 1-ый ложный операнд, либо последний, если все истинные
@@ -2605,6 +2608,7 @@ class Matrix:
 matrix = Matrix(2, 3, 1)
 matrix.set_value(1, 2, 8)
 print(matrix)
+print([matrix, matrix])  # [Matrix(2, 3), Matrix(2, 3)] (для объектов коллекций по умолчанию вызывается метод __repr__)
 print(repr(matrix))
 print(-matrix)
 print(~matrix)
