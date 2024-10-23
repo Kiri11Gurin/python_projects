@@ -1325,6 +1325,28 @@ except NegativeAgeError as e:
     print(e)  # Возраст не может быть отрицательным
     print(type(e))  # <class '__main__.NegativeAgeError'>
     print(type(e).__name__)  # NegativeAgeError
+
+
+class PrimaryKeyError(Exception):
+    """Создание пользовательских исключений с аргументами."""
+    def __init__(self, **kwargs):
+        if not kwargs:
+            self.message = f'Первичный ключ должен быть целым неотрицательным числом'
+        elif kwargs.get('id') is not None:
+            self.message = f"Значение первичного ключа id = {kwargs.get('id')} недопустимо"
+        elif kwargs.get('pk') is not None:
+            self.message = f"Значение первичного ключа pk = {kwargs.get('pk')} недопустимо"
+
+    def __str__(self):
+        return self.message
+
+
+try:
+    raise PrimaryKeyError(id=-10.5)
+except PrimaryKeyError as error:
+    print(error)  # Значение первичного ключа id = -10.5 недопустимо
+    print(error.__class__)  # <class '__main__.PrimaryKeyError'>
+    print(type(error).__name__)  # PrimaryKeyError
 '''
 
 '''
