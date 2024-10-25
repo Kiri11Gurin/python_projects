@@ -2975,9 +2975,8 @@ try:
 except Exception as error:
     print(error)
 print(v1)  # [2, 4, 6]
-'''
 
-'''
+
 # реентерабельный контекстный менеджер
 class TreeBuilder:
     """Построение дерева, используя принцип стека.
