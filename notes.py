@@ -2913,7 +2913,7 @@ with UpperPrint():
 
 import copy
 class Atomic:
-    """Возврат к исходной коллекции при ошибке."""
+    """Возврат к исходной коллекции при ошибке (способ 1)."""
     def __init__(self, data, deep=False):
         self.data = data
         self.deep = deep
@@ -2944,6 +2944,40 @@ with Atomic(numbers) as atomic:
 print(numbers)  # print(numbers)
 
 
+class DefenderVector:
+    """Возврат к исходной коллекции при ошибке (способ 2)."""
+    def __init__(self, v):
+        self.__v = v
+
+    def __enter__(self):
+        self.__temp = self.__v[:]  # делаем копию вектора v
+        return self.__temp
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.__v[:] = self.__temp
+        return False
+
+
+v1 = [1, 2, 3]
+v2 = [1, 2]
+try:
+    with DefenderVector(v1) as dv:
+        for i, _ in enumerate(dv):
+            dv[i] += v2[i]
+except Exception as error:
+    print(error)
+print(v1)  # [1, 2, 3]
+try:
+    with DefenderVector(v1) as dv:
+        for i, _ in enumerate(dv):
+            dv[i] += v1[i]
+except Exception as error:
+    print(error)
+print(v1)  # [2, 4, 6]
+'''
+
+'''
 # реентерабельный контекстный менеджер
 class TreeBuilder:
     """Построение дерева, используя принцип стека.
