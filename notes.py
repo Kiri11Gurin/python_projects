@@ -3575,45 +3575,47 @@ with open(r"C:/Users/gurin/Downloads/Python/domain_usage_dict.csv", 'w', encodin
         wr.writerow(row)
 '''
 
-# МОДУЛЬ PANDAS
-# import matplotlib.pyplot as plt
-# import pandas as pd
-# import phik
-# import seaborn as sns
-# import shap
-# from catboost import CatBoostClassifier, CatBoostRegressor, cv, Pool
-# from phik import report
-# from phik.report import plot_correlation_matrix
-# from sklearn import preprocessing
-# from sklearn import tree
-# from sklearn.cluster import KMeans
-# from sklearn.ensemble import ExtraTreesClassifier, GradientBoostingClassifier, RandomForestClassifier
-# from sklearn.linear_model import LinearRegression, SGDClassifier
-# from sklearn.metrics import accuracy_score, auc, average_precision_score, classification_report, confusion_matrix, \
-#     f1_score, log_loss, mean_absolute_error, mean_absolute_percentage_error, precision_recall_fscore_support, \
-#     precision_score, recall_score, roc_auc_score, roc_curve
-# from sklearn.model_selection import train_test_split
-# from sklearn.neighbors import KNeighborsClassifier
-# from sklearn.preprocessing import StandardScaler
-# pd.set_option('display.width', None)  # показывать таблицу во всю ширину экрана
-# pd.set_option('display.max_columns', None)  # показать все столбцы таблицы
-# df = pd.read_csv(r"C:/Users/gurin/Downloads/Python/students.csv")  # df - dataframe
-# df_2 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/aug_train.csv")
-# df_3 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/uk-used-cars/bmw.csv")
-# df_4 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/Churn_Modelling.csv")
 '''
+# МОДУЛЬ PANDAS
+import matplotlib.pyplot as plt
+import pandas as pd
+import phik
+import seaborn as sns
+import shap
+from catboost import CatBoostClassifier, CatBoostRegressor, cv, Pool
+from phik import report
+from phik.report import plot_correlation_matrix
+from sklearn import preprocessing
+from sklearn import tree
+from sklearn.cluster import KMeans
+from sklearn.ensemble import ExtraTreesClassifier, GradientBoostingClassifier, RandomForestClassifier
+from sklearn.linear_model import LinearRegression, SGDClassifier
+from sklearn.metrics import accuracy_score, auc, average_precision_score, classification_report, confusion_matrix, \
+    f1_score, log_loss, mean_absolute_error, mean_absolute_percentage_error, precision_recall_fscore_support, \
+    precision_score, recall_score, roc_auc_score, roc_curve
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+pd.set_option('display.width', None)  # показывать таблицу во всю ширину экрана
+pd.set_option('display.max_columns', None)  # показать все столбцы таблицы
+df = pd.read_csv(r"C:/Users/gurin/Downloads/Python/students.csv")  # df - dataframe
+df_2 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/aug_train.csv")
+df_3 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/uk-used-cars/bmw.csv")
+df_4 = pd.read_csv(r"C:/Users/gurin/Downloads/Python/Churn_Modelling.csv")
+
 print(df.columns, end='\n\n')  # список всех столбцов (список фичей)
 print(df.info(), end='\n\n')
+print(df.describe(), end='\n\n')  # описание всех столбцов таблицы
 print(df.head(), end='\n\n')  # первые 5 строк таблицы
 print(df.tail(), end='\n\n')  # последние 5 строк таблицы
+print(df.dtypes, end='\n\n')  # типы данных столбцов (dtypes = data types)
 print(df['Age'].describe(), end='\n\n')  # описание столбца для числовых данных
 print(df['Chocolate'].value_counts(), end='\n\n')  # описание столбца для нечисловых (категориальных) данных
 print(df['Sex'].value_counts(normalize=True), end='\n\n')  # вывод данных в долях
 print(df['Glasses'].value_counts(dropna=False), end='\n\n')  # dropna=False отображает пропуски
-print(df.describe(), end='\n\n')  # описание всех столбцов таблицы
 print(df['Growth'].mean, end='\n\n')  # происходит автоматическое округление
 print(df[['Growth', 'Weight', 'Age']], end='\n\n')  # для выбора нескольких столбцов нужны двойные квадратные скобки
-print(df[df['Growth'] < df['Growth'].mean()], end='\n\n')
+print(df[df['Growth'] < df['Growth'].mean()], end='\n\n')  # выбор людей, у которых рост меньше среднего
 df_cut = df[['Age', 'Growth', 'Weight']].copy()  # .copy() нужно, чтобы не было SettingWithCopyWarning
 print(df_cut.rename({'Age': 'col1', 'Weight': 'col3'}, axis=1))  # переименование столбцов, не сохраняя названия
 print(df_cut.sort_values(by=['Age', 'Growth'], ascending=[True, True]), end='\n\n')  # сортировка по нескольким столбцам
@@ -3668,7 +3670,7 @@ print(len(df_2))  # проверка на появление дубликато�
 df_2 = df_2.drop('age', axis=1)
 
 # корреляция
-# Метод corr() использовать тогда, когда знаем, что корреляция есть, и нужно выяснить между какими признаками сильнее.
+# Метод corr() использовать тогда, когда знаем, что корреляция есть и нужно выяснить между какими признаками сильнее.
 print(df_cut.corr(), end='\n\n')  # коэффициент корреляции
 sns.heatmap(df_cut.corr())  # зависимость между столбцами присутствует, если значение больше 0.5
 plt.show()  # если значение меньше 0, то зависимость обратная
