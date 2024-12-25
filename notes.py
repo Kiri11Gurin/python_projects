@@ -4292,6 +4292,231 @@ test['y_score_cross_val'] = model.predict_proba(test_data)[:, 1]
 print(roc_auc_score(test['Exited'], test['y_score_cross_val']))
 '''
 
+"""
+# SQL-ЗАПРОСЫ
+import sqlite3
+import pandas as pd
+pd.set_option('display.width', None)
+df = pd.read_csv(r"C:\\Users\\gurin\\Downloads\\Python\\german_credit_augmented.csv")
+# Всегда нужно менять строковый тип данных на объект типа "дата":
+df['contract_dt'] = pd.to_datetime(df['contract_dt'], format='%Y-%m-%d %H:%M:%S')
+con = sqlite3.connect('db')  # подключение к базе данных (connection)
+print(df)
+df.to_sql('german_credit', con, index=False, if_exists='replace')
+
+
+def select(sql):
+    print(pd.read_sql(sql, con), end='\n\n')
+
+
+sql = '''
+SELECT t.age * 3 AS age_mult_3, t.housing  -- обозначение комментария в SQL
+FROM german_credit AS t  -- правилом хорошего тона является указание alias'а таблицы
+LIMIT 5'''
+select(sql)
+
+sql = '''
+SELECT t.* FROM german_credit AS t  -- всегда указывать таблицу, поля которой извлекаются, т. к. явное лучше неявного
+WHERE t.contract_dt BETWEEN '2007-01-01' AND '2007-12-31'  -- Сам день 2007-12-31 в выборку не попадет, т.к. BETWEEN
+      AND t.purpose IN ('car', 'repairs')                  -- включает все до 00:00 верхней границы,
+ORDER BY t.contract_dt                                     -- поэтому лучше писать до '2008-01-01'.
+'''
+select(sql)
+
+# сохранение результата запроса в отдельную таблицу
+cur = con.cursor()
+sql = '''
+DROP TABLE IF EXISTS greater_1000_credit;
+CREATE TABLE greater_1000_credit AS
+SELECT * FROM german_credit AS t
+WHERE t.credit_amount > 1000'''
+print(cur.executescript(sql))  # <sqlite3.Cursor object at 0x000002A4635ABF40>
+sql = '''SELECT * FROM greater_1000_credit AS t'''
+select(sql)
+
+# UNION
+jan = pd.DataFrame({'month': ['jan', 'jan'], 'revenue': [1, 2]})
+feb = pd.DataFrame({'month': ['feb', 'feb'], 'revenue': [1, 2]})
+jan.to_sql('jan', con, index=False, if_exists='replace')
+feb.to_sql('feb', con, index=False, if_exists='replace')
+sql = '''
+SELECT * FROM jan AS t
+UNION ALL
+SELECT * FROM feb AS t'''
+select(sql)
+
+sql = '''
+SELECT t.revenue FROM jan AS t
+UNION  -- UNION в отличие от UNION ALL удаляет дубликаты
+SELECT t.revenue FROM feb AS t'''
+select(sql)
+
+# GROUP BY
+sql = '''
+SELECT t.sex,
+       Count(*) AS cnt,
+       Avg(t.credit_amount) AS credit_amount_avg
+FROM german_credit AS t
+GROUP BY t.sex'''
+select(sql)
+
+sql = '''
+SELECT DISTINCT t.age
+FROM german_credit AS t
+ORDER BY t.age DESC
+LIMIT 10'''
+select(sql)
+
+# нахождение дубликатов
+t = pd.DataFrame({'id': [1, 1, 2, 2, 3],
+                  'name': ['a', 'b', 'c', 'd', 'e']})
+t.to_sql('dupl_test', con, index=False, if_exists='replace')
+print(t)
+
+sql = '''SELECT * FROM dupl_test AS t'''
+select(sql)
+
+sql = '''
+SELECT *
+FROM   dupl_test AS t
+WHERE  t.id IN (SELECT t.id
+                FROM   dupl_test AS t
+                GROUP  BY t.id
+                HAVING Count(1) > 1)'''  # Count(1) аналогично Count(*)
+select(sql)
+
+# разделение данных на интервалы
+sql = '''
+SELECT CASE
+         WHEN t.credit_amount < 1000 THEN '<1000'
+         WHEN t.credit_amount < 2000 THEN '1000-2000'
+         WHEN t.credit_amount < 3000 THEN '2000-3000'
+         WHEN t.credit_amount >= 3000 THEN '>= 3000'
+         ELSE 'other'
+       END AS credit_amount_bin,
+       Count(1) AS credit_cnt
+FROM   german_credit AS t
+GROUP  BY 1'''
+select(sql)
+
+# CTE (Common Table Expressions)
+sql = '''
+WITH id_cnt
+     AS (SELECT t.id,
+                Count(1) AS cnt
+         FROM   dupl_test AS t
+         GROUP BY t.id),
+     id_cnt_2
+     AS (SELECT *
+         FROM   id_cnt AS t
+         WHERE  t.cnt > 1)
+SELECT *
+FROM   id_cnt_2 AS t
+WHERE  t.id = 1'''
+select(sql)
+
+# JOIN
+users = pd.DataFrame({'id': [1, 2, 3], 'name': ['gleb', 'john snow', 'tyrion']})
+items = pd.DataFrame({'user_id': [1, 3, 3], 'item_name': ['hleb', 'gold', 'wine'], 'value': [5, 100, 20]})
+users.to_sql('users', con, index=False, if_exists='replace')
+items.to_sql('items', con, index=False, if_exists='replace')
+sql = '''
+SELECT u.*,
+       i.item_name,
+       i.value,
+       i.user_id
+FROM   users AS u
+       LEFT JOIN items AS i
+              ON u.id = i.user_id'''  # всегда прописывать alias таблиц в условии join, чтобы избежать ошибок и путаницы
+select(sql)
+
+# CROSS JOIN
+sql = '''
+WITH users
+     AS (SELECT 1 AS user_id
+         UNION ALL
+         SELECT 2 AS user_id
+         UNION ALL
+         SELECT 3 AS user_id),
+     month
+     AS (SELECT Date('2021-03-01') AS month
+         UNION ALL
+         SELECT Date('2021-04-01') AS month)
+SELECT *
+FROM   users AS t
+       INNER JOIN month AS m
+         ON 1 = 1'''  # INNER JOIN ON 1 = 1 аналогично CROSS JOIN
+select(sql)
+
+# JOIN таблицы саму на себя
+t = pd.DataFrame({'dt': pd.to_datetime(['2021-04-01', '2021-04-02', '2021-04-03'], format='%Y-%m-%d'),
+                  'revenue': [1, 2, 3]})
+t.to_sql('revenue', con, index=False, if_exists='replace')
+# подсчёт кумулятивной выручки (1-ый способ)
+sql = '''select
+t.dt,t.revenue, sum(r.revenue) as cumsum from revenue t
+join revenue r on r.dt <= t.dt
+group by t.dt, t.revenue'''
+select(sql)
+
+# подзапросы
+transactions = pd.read_csv(r"C:/Users/gurin/Downloads/Python/german_credit_augmented_transactions.csv")
+transactions.to_sql('client_transactions', con, index=False, if_exists='replace')
+min_date = '''SELECT date(min(t.dt),'start of month') FROM client_transactions AS t'''
+max_date = '''SELECT date(max(t.dt),'start of month') FROM client_transactions AS t'''
+# Нельзя просто выполнить группировку по датам, т. к. за сентябрь отсутствуют транзакции, сначала нужно
+# сгенерировать всевозможные даты, затем выполнить LEFT JOIN к этим датам:
+sql = f'''
+WITH RECURSIVE dates(month) AS  -- dates - название таблицы, month - название столбца
+    (VALUES(({min_date}))
+    UNION ALL
+    SELECT date(month, '+1 month')
+    FROM dates
+    WHERE month < ({max_date})),
+trans_month AS
+    (SELECT date(t.dt, 'start of month') AS month,
+    count(1) AS transaction_cnt,
+    SUM(t.amount) as amount_sum
+    FROM client_transactions AS t
+    GROUP BY 1
+    ORDER BY 1)
+SELECT t.month,
+       coalesce(tm.transaction_cnt, 0) AS transaction_cnt,
+       coalesce(tm.amount_sum, 0) AS amount_sum
+FROM dates AS t
+LEFT JOIN trans_month tm ON t.month = tm.month
+ORDER BY t.month'''
+select(sql)
+
+# оконные функции
+# подсчёт кумулятивной выручки (2-ой способ)
+sql = '''
+SELECT t.*,
+       SUM(t.revenue) OVER (ORDER BY t.dt) AS cum_sum
+FROM   revenue AS t'''
+select(sql)
+
+t = pd.DataFrame({'dep': ['a', 'a', 'a', 'a', 'a',
+                         'b', 'b', 'b', 'b', 'b'],
+                  'emp': ['aa', 'ab', 'ac', 'ad', 'ae',
+                         'ba', 'bb', 'bc', 'bd', 'be'],
+                  'sal': [5, 5, 3, 2, 1,
+                         5, 4, 3, 2, 1]})
+t.to_sql('salary', con, index=False, if_exists='replace')
+sql = '''
+SELECT t.*,
+       RANK()
+         OVER (
+           PARTITION BY t.dep
+           ORDER BY t.sal DESC) AS rnk,
+       Dense_rank()
+         OVER (
+           partition BY t.dep
+           ORDER BY t.sal DESC) AS d_rnk
+FROM salary AS t'''
+select(sql)
+"""
+
 '''
 # МОДУЛЬ OS
 # mkdir() - создает новую папку
