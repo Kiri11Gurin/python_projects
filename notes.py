@@ -268,6 +268,8 @@ print(rix2)
 print(a.replace('l', 'SUBSTITUTION', 1))  # HeSUBSTITUTIONlo What iS It1 (тип данных - str)
 print(a.partition('ha'))  # ('Hello W', 'ha', 't iS It1') (выводит tuple - кортеж)
 print(a.split('l', 1))  # ['He', 'lo What iS It1'] (преобразует в list - список)
+# Особенности работы split(sep=None) с пробелами:
+print('/as////df/'.split('/'), ' as    df '.split())  # ['', 'as', '', '', '', 'df', ''] ['as', 'df']
 # Для проверки начала и конца строк startswith() и endswith() предпочтительнее,
 # чем срезы, т. к. код более чистый и меньше вероятность возникновения ошибки.
 print('Take'.startswith('T'))  # True
