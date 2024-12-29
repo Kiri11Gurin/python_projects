@@ -3565,6 +3565,37 @@ print(data)  # для завершения работы программы на�
 sys.stdout.write('Hello ')  # поток вывода (в отличие от print нет перехода на новую строку)
 sys.stdout.write('world!')  # Hello world!
 # sys.stdout.write(17) (выведет ошибку, т. к. необходимо преобразовать данные к строковому типу данных)
+
+# вычисление объёма занимаемой памяти
+from pympler import asizeof
+# __sizeof__() метод, позволяющий узнать сколько байтов памяти занимает объект
+# getsizeof() вызывает метод объекта __sizeof__ и добавляет размер дополнительной информации,
+# которая хранится для сборщика мусора, если он используется
+# asizeof в отличие от sys.getsizeof измеряет объекты рекурсивно
+a = 3
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 28 28 32
+
+a = range(10)
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 48 48 48
+
+a = (i for i in a)
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 88 104 424
+
+a = tuple(a)
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 104 120 432
+
+a = list(a)
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 120 136 448
+
+a = set(a)
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 712 728 1040
+
+a = dict(zip(a, a))
+print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 344 360 672
+
+obj = [1, 2, (3, 4), 'text']
+print(obj.__sizeof__(), sys.getsizeof(obj), asizeof.asizeof(obj))  # 72 88 328
+print(asizeof.asized(obj, detail=2).format())  # [1, 2, (3, 4), 'text'] size=328 flat=88
 '''
 
 '''
@@ -5103,38 +5134,4 @@ while 1:
         clouds[i % 2].goto(i, 0)
         clouds[i % 2].dot(200)
         clouds[(i + 1) % 2].clear()
-'''
-
-'''
-# ВЫЧИСЛЕНИЕ ОБЪЁМА ЗАНИМАЕМОЙ ПАМЯТИ
-import sys
-from pympler import asizeof
-# __sizeof__() метод, позволяющий узнать сколько байтов памяти занимает объект
-# getsizeof() вызывает метод объекта __sizeof__ и добавляет размер дополнительной информации,
-# которая хранится для сборщика мусора, если он используется
-# asizeof в отличие от sys.getsizeof измеряет объекты рекурсивно
-a = 3
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 28 28 32
-
-a = range(10)
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 48 48 48
-
-a = (i for i in a)
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 88 104 424
-
-a = tuple(a)
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 104 120 432
-
-a = list(a)
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 120 136 448
-
-a = set(a)
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 712 728 1040
-
-a = dict(zip(a, a))
-print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 344 360 672
-
-obj = [1, 2, (3, 4), 'text']
-print(obj.__sizeof__(), sys.getsizeof(obj), asizeof.asizeof(obj))  # 72 88 328
-print(asizeof.asized(obj, detail=2).format())  # [1, 2, (3, 4), 'text'] size=328 flat=88
 '''
