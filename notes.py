@@ -64,7 +64,7 @@ print(int('FF', 16))  # 255
 from operator import *         # импортируем все функции
 # Модуль operator реализован на языке C, поэтому функции 
 # этого модуля работают в разы быстрее, чем самописные функции в Python.
-print(add(10, 20))             # add - сумма, sub - разность, mod - вывод остатка (аналогично %)
+print(add(10, 20))             # add - сумма, sub - разность, mod - остаток (аналогично %)
 print(contains([1, 2, 3], 3))  # проверка на входимость
 print(mul(2, 5))               # mul - умножение, pow - возведение в степень
 print(floordiv(20, 3))         # floordiv - целочисленное деление (//), truediv - деление (/)
@@ -3828,7 +3828,7 @@ with open(r"C:/Users/gurin/Downloads/Python/domain_usage_dict.csv", 'w', encodin
 '''
 
 '''
-# МОДУЛЬ PANDAS (DATA SCIENCE, АНАЛИЗ ДАННЫХ)
+# МОДУЛЬ PANDAS (DATA SCIENCE, АНАЛИЗ ДАННЫХ, МАШИННОЕ ОБУЧЕНИЕ)
 import matplotlib.pyplot as plt
 import pandas as pd
 import phik
