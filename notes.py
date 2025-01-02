@@ -4769,7 +4769,6 @@ FROM salary AS t'''
 select(sql)
 """
 
-
 '''
 # ВИЗУАЛИЗАЦИЯ ДАННЫХ
 # МОДУЛЬ MATPLOTLIB
@@ -4784,6 +4783,7 @@ plt.xlabel('Value', fontsize=14)
 plt.ylabel('Square of Value', fontsize=14)
 plt.tick_params(axis='both', labelsize=14)  # размер шрифта делений на осях
 plt.scatter(2, 10, s=200)  # нанести точку на график (s - толщина точки)
+plt.annotate('A', (2, 11), fontsize=20)  # нанести надпись на график
 plt.show()
 '''
 '''
