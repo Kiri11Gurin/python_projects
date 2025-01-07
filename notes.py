@@ -74,12 +74,12 @@ print(gt(8, 8))                # gt (greater than; >), ge (greater than or equal
 print(eq(5, 5))                # eq (equal; ==), ne (not equal; !=)
 '''
 
-
+'''
 # МОДУЛИ DECIMAL & FRACTIONS (более точные и медленные, чем int и float)
 import decimal
 import fractions
 import math
-'''
+
 # Задавать числа нужно либо из целых чисел либо из строки (из float не рекомендуется):
 a = decimal.Decimal('4.55')
 b = fractions.Fraction('0.55')
