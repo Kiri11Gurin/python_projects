@@ -104,12 +104,12 @@ print(num.sqrt())  # 3.162277660168379331998893544 (квадратный кор�
 print(num.exp())  # 22026.46579480671651695790065 (e в степени 10)
 print(num.ln())  # 2.302585092994045684017991455 (натуральный логарифм)
 print(num.log10(), type(num.log10()))  # 1 <class 'decimal.Decimal'>
-print(math.log10(num), type(math.log10(num)))  # 1.0 <class 'float'> (преобразование decimal во float)
+print(math.log10(num), type(math.log10(num)))  # 1.0 <class 'float'> (использование math преобразует decimal во float)
 print(num.as_tuple())  # DecimalTuple(sign=0, digits=(1, 0, 0), exponent=-1)
 # sign – знак числа (0 для положительного числа и 1 для отрицательного числа)
 # digits – цифры числа
 # exponent – значение экспоненты (количество цифр после точки, умноженное на -1)
-print(decimal.getcontext())  # Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, и т. д.)
+print(decimal.getcontext())  # Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, ...)
 decimal.getcontext().prec = 3  # устанавливаем точность в 3 знака
 print(1000 * num / 3)  # 3.33E+3 (10000 / 3 = 3333.33333333)
 print(num / 3000)  # 0.00333
