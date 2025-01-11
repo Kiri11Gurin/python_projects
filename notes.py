@@ -874,6 +874,15 @@ print(point1)  # Point(x=0, y=0)
 print(point2)  # Point(x=1, y=9)
 print(Point._field_defaults)  # {'x': 0, 'y': 0}
 
+from collections import OrderedDict
+d = OrderedDict([('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5), ('f', 6)])
+print(d)  # OrderedDict([('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5), ('f', 6)])
+print(d.popitem())  # ('f', 6) (удаление последней пары ключ-значение)
+print(d.popitem(last=False))  # ('a', 1) (удаление первой пары ключ-значение)
+d.move_to_end('b')  # перемещение указанного ключа в конец словаря
+d.move_to_end('e', last=False)  # перемещение указанного ключа в начало словаря
+print(d)  # OrderedDict([('e', 5), ('c', 3), ('d', 4), ('b', 2)])
+
 from collections import defaultdict
 # В отличие от обычных словарей если нет ключа, то создаёт ключ со значением по умолчанию (для int равен 0).
 # Создание новых пар ключ-значение, используя defaultdict быстрее, чем методы setdeafult() и get() для словарей.
