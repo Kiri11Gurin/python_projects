@@ -262,7 +262,9 @@ print(a.find('iS', 1, 14))  # порядковый номер элемента, 
 # rfind, rindex (порядковый номер символа с конца), index аналогичен find, однако если вхождения нет, то выводит ошибку
 pattern = 'AT'
 data = 'ATTAAAGGTTTATACCTTCCCAGGT1!# AT'
-x = data.find(pattern, data.find(pattern) + 1)
+x = data.find(pattern)
+print(x)  # 0 (1-ое вхождение значения)
+x = data.find(pattern, x + 1)
 print(x)  # 11 (2-ое вхождение значения)
 x = data.find(pattern, x + 1)
 print(x)  # 29 (3-ее вхождение значения)
