@@ -344,10 +344,10 @@ print(repr(a))  # '6539834dfg!' (строковое представление �
 
 '''
 # МОДУЛЬ STRING
-from string import ascii_lowercase, ascii_uppercase, punctuation
-print(punctuation)  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
-print(ascii_lowercase)  # abcdefghijklmnopqrstuvwxyz
-print(ascii_uppercase)  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+import string
+print(string.punctuation)  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+print(string.ascii_lowercase)  # abcdefghijklmnopqrstuvwxyz
+print(string.ascii_uppercase)  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
 print(ord('A'), ord('a'))  # 65 97 (код символа в таблице символов Unicode)
 print(list(chr(i) for i in range(ord('a'), ord('z') + 1)))  # ['a', 'b', 'c', 'd', 'e', 'f', ...] (вывод всех букв)
 '''
@@ -358,8 +358,7 @@ print(list(chr(i) for i in range(ord('a'), ord('z') + 1)))  # ['a', 'b', 'c', 'd
 # так как при каждом складывании создаются временные строки, что использует много памяти:
 # "y" + " " + "e" + " " + "s" - в данном примере создаются 3 временные строки (количество операторов минус 1)
 x = 5 / 3
-a = 'Anthony'
-b = 'Joshua'
+a, b = 'Anthony', 'Joshua'
 print(f'Hello {a + " " + b}! You are {x ** 2 % 70} years old')  # наиболее функциональный вариант
 print('Hello %s %s! You just delved into Python' % (b, a))  # выводит переменные по порядку
 print('Hello {} {}! You just delved into Python'.format(a, b))  # выводит переменные по порядку
