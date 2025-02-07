@@ -198,6 +198,9 @@ print(a.astype(str))  # конвертация всех элементов в с
 print(a.astype(bool))  # конвертация всех элементов в булевый тип данных
 print(a[:2, :2])  # срез матрицы одновременно и по строкам и по столбцам
 print(a[:, 1])  # выбор первого столбца
+matrix = np.zeros((3, 5))
+matrix[1] = 1  # в отличие от обычных срезов, в срезах numpy не нужно передавать список
+print(matrix)
 print(a.shape)  # (3, 3) (1-ое число - количество строк, 2-ое число - столбцов)
 print(a.ndim)  # 2 (количество измерений в массиве)
 print(a.size)  # 9 (количество элементов в массиве)
@@ -240,7 +243,10 @@ grades = np.array([1, 3, 4, 2, 5, 5])
 print(np.where(grades > 3))  # (array([2, 4, 5], dtype=int64),)
 # Функция может принимать два опциональных параметра:
 # 1-ый заменит значения, удовлетворяющие условию, а 2-ой неудовлетворяющие условию:
-print(np.where(grades > 3, 'gt3', 'lt3'))  # ['lt3' 'lt3' 'gt3' 'lt3' 'gt3' 'gt3']
+print(np.where(grades > 3))  # (array([2, 4, 5], dtype=int64),) (индексы, удовлетворяющие условию)
+print(np.where(grades > 3, 'gt3', 'lte3'))  # ['lte3' 'lte3' 'gt3' 'lte3' 'gt3' 'gt3']
+print(np.where(grades > 3, grades, -grades))  # [-1 -3  4 -2  5  5]
+print(np.where((grades >= 3) & (grades <= 4), grades, -grades))  # [-1  3  4 -2 -5 -5]
 
 # random
 print(np.random.binomial(1, 0.2, size=100))  # список из нулей и единиц
@@ -382,6 +388,7 @@ print(f'{5:02}')  # 05
 '''
 # РЕГУЛЯРНЫЕ ВЫРАЖЕНИЯ (REGEX)
 import re
+
 target_string = "Emma is a basketball player who was born on June 17, 1993. " \
                 "She played 112 matches with scoring average 26.12 points per game. " \
                 "Her weight is 51 kg. -1711.23"
