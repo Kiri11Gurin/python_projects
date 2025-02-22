@@ -4809,6 +4809,8 @@ select(sql)
 # ВИЗУАЛИЗАЦИЯ ДАННЫХ
 # МОДУЛЬ MATPLOTLIB
 import matplotlib.pyplot as plt
+import numpy as np
+
 input_values = [1, 2, 3, 4, 5]  # значения по x
 squares = [1, 4, 9, 16, 25]  # значения по y
 plt.grid(lw=1, ls='-')  # добавление сетки на график (lw - linewidth)
@@ -4850,15 +4852,124 @@ plt.legend(loc=2)  # loc - местоположение легенды
 plt.show()
 '''
 '''
+def f(x, a, b):
+    x[(x > -0.1 ** 10) & (x < 0.1 ** 10)] = np.nan  # удаление нулевых и близких к нулю значений
+    if int(b) != b:  # нужно, чтобы не было ошибки при извлечении корня из отрицательного числа
+        x[x < 0] = np.nan
+    if int(a) != a:  # нужно, чтобы не было ошибки при извлечении корня из отрицательного числа
+        x[x < 0] = np.nan
+    return (x ** b + a ** b) / x ** b
+
+
+# PART I
+x = np.arange(-5, 5, 0.1)
+y1 = f(x, 1, 1)
+y2 = f(x, 2, 1)
+y3 = f(x, 1, 2)
+fig, axes = plt.subplots(figsize=(12, 7))
+axes.plot(x, y1, color='red')
+axes.plot(x, y2, color='blue')
+axes.plot(x, y3, color='green')
+plt.legend(['α = 1, β = 1', 'α = 2, β = 1', 'α = 1, β = 2'])
+plt.grid(lw=1, ls='-')
+plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)
+plt.xlabel('x', fontsize=14)
+plt.ylabel('f(x)', fontsize=14)
+axes.axis((-5.5, 5, -15, 15))
+plt.savefig(r"C:\Users\gurin\Downloads\Python\pic1.1.svg", bbox_inches='tight')
+plt.show()
+
+# graphs in graph
+x1 = np.arange(0.1 ** 10, 5, 0.1)
+y11 = f(x1, 1, 1)
+y12 = f(x1, 2, 1)
+y13 = f(x1, 1, 2)
+fig = plt.figure(figsize=(12, 7))
+axes1 = fig.add_axes((0.1, 0.1, 0.8, 0.8))
+axes1.plot(x1, y11, color='red')
+axes1.plot(x1, y12, color='blue')
+axes1.plot(x1, y13, color='green')
+axes1.axis((0, 5, 0, 15))
+plt.legend(['α = 1, β = 1', 'α = 2, β = 1', 'α = 1, β = 2'])
+plt.grid(lw=1, ls='-')
+plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)
+plt.xlabel('x', fontsize=14)
+plt.ylabel('f(x)', fontsize=14)
+
+x2 = np.arange(0.1 ** 5, 2, 0.0001)
+y21 = f(x2, 1, 1)
+y22 = f(x2, 2, 1)
+y23 = f(x2, 1, 2)
+axes2 = fig.add_axes((0.25, 0.4, 0.25, 0.25))
+axes2.plot(x2, y21, color='red')
+axes2.plot(x2, y22, color='blue')
+axes2.plot(x2, y23, color='green')
+axes2.axis((0, 0.05, 10 ** 2, 10 ** 3))
+
+x3 = np.arange(10 ** 2, 10 ** 4, 100, dtype=float)
+y31 = f(x3, 1, 1)
+y32 = f(x3, 2, 1)
+y33 = f(x3, 1, 2)
+axes3 = fig.add_axes((0.6, 0.4, 0.25, 0.25))
+axes3.plot(x3, y31, color='red')
+axes3.plot(x3, y32, color='blue')
+axes3.plot(x3, y33, color='green')
+axes3.axis((10 ** 3, 10 ** 4, 1 - 0.1 ** 4, 1 + 0.1 ** 3))
+plt.savefig(r"C:\Users\gurin\Downloads\Python\pic1.2.svg", bbox_inches='tight')
+plt.show()
+
+# subplots
+x = np.arange(-10, 10, 0.01)
+ym1 = f(x, 1, 0)  # общий y1
+ym2 = f(x, 1, -1)  # общий y2
+y01 = f(x, 1, 0.5)
+y02 = f(x, 1, 0.8)
+y11 = f(x, 1, -0.5)
+y12 = f(x, 1, -0.8)
+y21 = f(x, 1, -1.5)
+y22 = f(x, 1, -2.5)
+
+fig, axes = plt.subplots(1, 3, figsize=(12, 7))  # число строк и столбцов графиков
+axes[0].plot(x, ym1, color='blue')
+axes[0].plot(x, ym2, color='red')
+axes[0].plot(x, y01, color='green')
+axes[0].plot(x, y02, color='black')
+axes[0].set_xlabel('x', fontsize=14)
+axes[0].set_ylabel('f(x)', fontsize=14)
+axes[0].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = 0.5', 'α = 1, β = 0.8'])
+axes[0].axis((0, 10, 0, 10))
+
+axes[1].plot(x, ym1, color='blue')
+axes[1].plot(x, ym2, color='red')
+axes[1].plot(x, y11, color='green')
+axes[1].plot(x, y12, color='black')
+axes[1].set_xlabel('x', fontsize=14)
+axes[1].set_ylabel('f(x)', fontsize=14)
+axes[1].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = -0.5', 'α = 1, β = -0.8'])
+axes[1].axis((0, 10, 0, 10))
+
+axes[2].plot(x, ym1, color='blue')
+axes[2].plot(x, ym2, color='red')
+axes[2].plot(x, y21, color='green')
+axes[2].plot(x, y22, color='black')
+axes[2].set_xlabel('x', fontsize=14)
+axes[2].set_ylabel('f(x)', fontsize=14)
+axes[2].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = -1.5', 'α = 1, β = -2.5'])
+axes[2].axis((0, 10, 0, 10))
+
+plt.suptitle(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # общее название
+fig.tight_layout()  # нужно, чтобы графики и надписи не пересекались
+plt.savefig(r"C:\Users\gurin\Downloads\Python\pic4.svg", bbox_inches='tight')
+plt.show()
+'''
+'''
 # построение гистограммы
-import numpy as np
 y = np.random.standard_cauchy(size=10**7)
 plt.hist(y, range=(0, 5), bins=50, density=True)
 plt.show()
 '''
 '''
 # построение круговых графиков
-import numpy as np
 N = 150
 r = 2 * np.random.rand(N)
 theta = 2 * np.pi * np.random.rand(N)
@@ -4883,7 +4994,6 @@ plt.show()
 '''
 '''
 # построение графика с погрешностями
-import numpy as np
 x = np.linspace(-5, 5, 40)
 y = np.sin(x) + np.tanh(2 * (x - 2))
 yerr = (2 * np.random.sample(size=y.size))
@@ -4897,7 +5007,6 @@ plt.show()
 '''
 '''
 # построение плотностных графиков
-import numpy as np
 def func(x, y):
     return (x - 1)**2 - (y + 2)**2
 
@@ -4925,7 +5034,6 @@ plt.show()
 '''
 '''
 # построение 3D графиков
-import numpy as np
 def func3(x, y):
     return x ** 4 - y ** 4
 
