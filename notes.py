@@ -4876,7 +4876,7 @@ plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fon
 plt.xlabel('x', fontsize=14)
 plt.ylabel('f(x)', fontsize=14)
 axes.axis((-5.5, 5, -15, 15))
-plt.savefig(r"C:\Users\gurin\Downloads\Python\pic1.1.svg", bbox_inches='tight')
+plt.savefig(r"C:\\Users\\gurin\\Downloads\\Python\\pic1.1.svg", bbox_inches='tight')
 plt.show()
 
 # graphs in graph
@@ -4915,7 +4915,7 @@ axes3.plot(x3, y31, color='red')
 axes3.plot(x3, y32, color='blue')
 axes3.plot(x3, y33, color='green')
 axes3.axis((10 ** 3, 10 ** 4, 1 - 0.1 ** 4, 1 + 0.1 ** 3))
-plt.savefig(r"C:\Users\gurin\Downloads\Python\pic1.2.svg", bbox_inches='tight')
+plt.savefig(r"C:\\Users\\gurin\\Downloads\\Python\\pic1.2.svg", bbox_inches='tight')
 plt.show()
 
 # subplots
@@ -4959,7 +4959,7 @@ axes[2].axis((0, 10, 0, 10))
 
 plt.suptitle(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # общее название
 fig.tight_layout()  # нужно, чтобы графики и надписи не пересекались
-plt.savefig(r"C:\Users\gurin\Downloads\Python\pic4.svg", bbox_inches='tight')
+plt.savefig(r"C:\\Users\\gurin\\Downloads\\Python\\pic4.svg", bbox_inches='tight')
 plt.show()
 '''
 '''
