@@ -4825,10 +4825,31 @@ plt.annotate('A', (2, 11), fontsize=20)  # нанести надпись на г
 plt.show()
 '''
 '''
+x = np.arange(0, 5, 0.1)
+fig, axes = plt.subplots(figsize=(13, 8))
+axes.plot(x, x + 1, 'r--', label='x + 1')
+axes.plot(x, x + 2, 'g-.', label='x + 2')
+axes.plot(x, x + 3, 'yo', label='x + 3')
+axes.plot(x, x + 4, color='blue', linestyle='--', linewidth=2.5)
+axes.plot(x, x + 5, color='gold', ls=':', lw=5)
+axes.plot(x, x + 6, color='firebrick', linestyle='-.', lw=2.5)
+axes.plot(x, x + 7, color='chartreuse', marker='o')
+axes.plot(x, x + 8, color='deepskyblue', marker='s', markersize=10)
+axes.plot(x, x + 9, color='red', marker='s', markersize=10, markerfacecolor='royalblue', markeredgewidth=2)
+axes.plot(x, x + 10, color='blue', lw=0, marker='*', markerfacecolor='navy', markersize=10)
+axes.set_title(u'Заголовок', fontsize=30)
+axes.set_xlabel('x', fontsize=18)
+axes.set_ylabel('y', fontsize=18)
+axes.legend(fontsize=18)
+plt.show()
+'''
+'''
 x_values = list(range(1, 1001, 50))
 y_values = [x ** 2 for x in x_values]
+y_values_2 = [y * 2 for y in y_values]
 plt.scatter(x_values, y_values, edgecolors='red', s=40)  # edgecolors - цвет контура точек
-plt.axis([0, 1100, 0, 1100000])  # назначение диапазона для каждой оси
+plt.axis((0, 1100, 0, 1100000))  # назначение диапазона для каждой оси
+plt.plot(x_values, y_values_2, 'bo', alpha=0.5)
 plt.show()
 '''
 '''
@@ -4930,27 +4951,27 @@ y21 = f(x, 1, -1.5)
 y22 = f(x, 1, -2.5)
 
 fig, axes = plt.subplots(1, 3, figsize=(12, 7))  # число строк и столбцов графиков
-axes[0].plot(x, ym1, color='blue')
-axes[0].plot(x, ym2, color='red')
-axes[0].plot(x, y01, color='green')
+axes[0].plot(x, ym1, 'r--')
+axes[0].plot(x, ym2, 'g-.')
+axes[0].plot(x, y01, 'blue')
 axes[0].plot(x, y02, color='black')
 axes[0].set_xlabel('x', fontsize=14)
 axes[0].set_ylabel('f(x)', fontsize=14)
 axes[0].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = 0.5', 'α = 1, β = 0.8'])
 axes[0].axis((0, 10, 0, 10))
 
-axes[1].plot(x, ym1, color='blue')
-axes[1].plot(x, ym2, color='red')
-axes[1].plot(x, y11, color='green')
+axes[1].plot(x, ym1, 'r--')
+axes[1].plot(x, ym2, 'g-.')
+axes[1].plot(x, y11, 'blue')
 axes[1].plot(x, y12, color='black')
 axes[1].set_xlabel('x', fontsize=14)
 axes[1].set_ylabel('f(x)', fontsize=14)
 axes[1].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = -0.5', 'α = 1, β = -0.8'])
 axes[1].axis((0, 10, 0, 10))
 
-axes[2].plot(x, ym1, color='blue')
-axes[2].plot(x, ym2, color='red')
-axes[2].plot(x, y21, color='green')
+axes[2].plot(x, ym1, 'r--')
+axes[2].plot(x, ym2, 'g-.')
+axes[2].plot(x, y21, 'blue')
 axes[2].plot(x, y22, color='black')
 axes[2].set_xlabel('x', fontsize=14)
 axes[2].set_ylabel('f(x)', fontsize=14)
@@ -4960,6 +4981,19 @@ axes[2].axis((0, 10, 0, 10))
 plt.suptitle(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # общее название
 fig.tight_layout()  # нужно, чтобы графики и надписи не пересекались
 plt.savefig(r"C:\\Users\\gurin\\Downloads\\Python\\pic4.svg", bbox_inches='tight')
+plt.show()
+'''
+'''
+# построение графика с погрешностями
+x = np.linspace(-5, 5, 40)
+y = np.sin(x) + np.tanh(2 * (x - 2))
+yerr = (2 * np.random.sample(size=y.size))
+plt.figure(figsize=(10, 5))
+plt.errorbar(x, y,
+             yerr=yerr,
+             ecolor='forestgreen',
+             capsize=10,  # ширина планки погрешностей
+             elinewidth=1.5)
 plt.show()
 '''
 '''
@@ -4990,19 +5024,6 @@ plt.pie(counts,
         startangle=120,  # начальный угол
         autopct='%.2f%%',  # формат вывода значений долей
         explode=(0, 0.2, 0.2))  # вынос частей
-plt.show()
-'''
-'''
-# построение графика с погрешностями
-x = np.linspace(-5, 5, 40)
-y = np.sin(x) + np.tanh(2 * (x - 2))
-yerr = (2 * np.random.sample(size=y.size))
-plt.figure(figsize=(10, 5))
-plt.errorbar(x, y,
-             yerr=yerr,
-             ecolor='forestgreen',
-             capsize=10,  # ширина планки погрешностей
-             elinewidth=1.5)
 plt.show()
 '''
 '''
