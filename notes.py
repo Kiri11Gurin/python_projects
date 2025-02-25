@@ -4893,7 +4893,7 @@ axes.plot(x, y2, color='blue')
 axes.plot(x, y3, color='green')
 plt.legend(['α = 1, β = 1', 'α = 2, β = 1', 'α = 1, β = 2'])
 plt.grid(lw=1, ls='-')
-plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)
+plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # форма записи называется latex
 plt.xlabel('x', fontsize=14)
 plt.ylabel('f(x)', fontsize=14)
 axes.axis((-5.5, 5, -15, 15))
@@ -4913,7 +4913,7 @@ axes1.plot(x1, y13, color='green')
 axes1.axis((0, 5, 0, 15))
 plt.legend(['α = 1, β = 1', 'α = 2, β = 1', 'α = 1, β = 2'])
 plt.grid(lw=1, ls='-')
-plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)
+plt.title(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # форма записи называется latex
 plt.xlabel('x', fontsize=14)
 plt.ylabel('f(x)', fontsize=14)
 
@@ -4976,7 +4976,9 @@ axes[2].plot(x, y22, color='black')
 axes[2].set_xlabel('x', fontsize=14)
 axes[2].set_ylabel('f(x)', fontsize=14)
 axes[2].legend(['α = 1, β = 0', 'α = 1, β = -1', 'α = 1, β = -1.5', 'α = 1, β = -2.5'])
-axes[2].axis((0, 10, 0, 10))
+axes[2].set_xlim(-1, 3)  # выбор построения интервала
+axes[2].set_ylim(0.5, 3)  # выбор построения интервала
+axes[2].set_yscale('log')  # установка логарифмической шкалы
 
 plt.suptitle(r'График функции $f(x) = \frac{x^β + α^β}{x^β}$', fontsize=18)  # общее название
 fig.tight_layout()  # нужно, чтобы графики и надписи не пересекались
