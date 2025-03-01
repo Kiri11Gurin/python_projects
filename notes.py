@@ -2159,9 +2159,9 @@ age: int = 10
 
 # Можно также аннотировать переменные, не назначая им сразу значения:
 surname: str
+'''
 
-
-
+'''
 # РЕКУРСИЯ
 import sys
 print(sys.getrecursionlimit())  # 1000
@@ -2244,6 +2244,26 @@ def recursive_sum(nested_lists):
 
 
 print(recursive_sum(a))  # 49
+
+
+def rec(digits):
+    """Function returns all possible letter combinations that the number could represent."""
+    res = []
+    d = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+
+    def backtrack(ind, comb):
+        if ind == len(digits):
+            res.append(comb)
+            return
+
+        for letter in d[digits[ind]]:
+            backtrack(ind + 1, comb + letter)
+
+    backtrack(0, "")
+    return res
+
+
+print(rec("23"))  # ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
 
 
 # Мемоизация – это способ оптимизации, при котором сохраняется результат выполнения функции,
