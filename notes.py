@@ -5137,6 +5137,60 @@ plt.show()
 '''
 
 '''
+# МОДУЛЬ SEABORN
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+pd.set_option('display.width', None)  # показывать таблицу во всю ширину экрана
+pd.set_option('display.max_columns', None)  # показать все столбцы таблицы
+
+df = pd.read_csv(r"C:\\Users\\gurin\\Downloads\\Python\tips.csv")
+print(df)
+
+sns.displot(df['total_bill'])  # распределение размера чека
+plt.show()
+
+sns.kdeplot(df['total_bill'])  # график плотности распределения
+sns.rugplot(df['total_bill'])  # график плотности распределения
+plt.show()
+
+sns.pairplot(df)  # отношения между всеми парами переменных
+plt.show()
+
+sns.pairplot(df, hue='sex', palette='Set1')
+plt.show()
+
+sns.countplot(x='day', data=df)  # гистограмма распределения категориального признака
+plt.show()
+
+sns.barplot(x='sex', y='total_bill', data=df)
+plt.show()
+
+sns.boxplot(x="day", y="total_bill", data=df, palette='Set1')  # ящик с усами или диаграмма размаха
+plt.show()
+
+sns.boxplot(x='day', y='tip', data=df, hue='smoker', palette='Set1')
+plt.show()
+
+sns.violinplot(x="day", y="total_bill", data=df, palette='Set2')  # выполняет ту же функцию, что и boxplot
+plt.show()  # по сути это два повёрнутые на 90 и -90 градусов графика плотности распределения, слипшиеся друг с другом
+
+sns.violinplot(x="day", y="total_bill", data=df, hue='smoker')
+plt.show()
+
+sns.stripplot(x="day", y="total_bill", data=df, palette="Set2")
+plt.show()  # диаграмму рассеяния, состоящую из одной категориальной переменной
+
+sns.swarmplot(x="day", y="total_bill", hue='sex', data=df)  # Представляет собой так же диаграмму рассеяния как и
+plt.show()  # stripplot, с той лишь разницей, что точки не накладываются друг на друга.
+
+# коэффициенты корреляции
+cor_df = df.corr(numeric_only=True)
+sns.heatmap(cor_df, annot=True, cmap='coolwarm')
+plt.show()
+'''
+
+'''
 # ЧЕРЕПАШЬЯ ГРАФИКА
 import turtle
 from random import randrange
