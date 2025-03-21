@@ -3844,8 +3844,9 @@ import requests
 resp = requests.get("https://www.python.org/")
 print(resp)  # <Response [200]> (код ответа)
 print(resp.status_code)  # 200
-print(resp.text)  # вывод html-кода
-print(resp.url)  # вывод адреса страницы
+print(resp.url)  # https://www.python.org/ (вывод адреса страницы)
+print(resp.encoding)  # utf-8 (кодировка)
+print(resp.text)  # html код страницы
 '''
 
 '''
