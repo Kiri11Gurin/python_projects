@@ -3757,8 +3757,11 @@ with open('C:/Users/gurin/Downloads/Python/philosophers2.txt', 'w', encoding='ut
 # listdir() - список файлов в папке
 
 import os
+from datetime import datetime
 given_path = 'C:\\Users\\gurin\\Downloads\\Книги'
 print(*os.listdir(given_path), sep='\n', end='\n\n')  # вывод всех файлов в папке
+print(datetime.fromtimestamp(os.path.getmtime(given_path)))  # дата и время последней модификации
+print(datetime.fromtimestamp(os.path.getatime(given_path)))  # дата и время последнего доступа
 
 
 def file_obhod(given_path, level=1):  # обход всех файлов в папках с помощью рекурсии
@@ -3844,7 +3847,7 @@ import requests
 resp = requests.get("https://www.python.org/")
 print(resp)  # <Response [200]> (код ответа)
 print(resp.status_code)  # 200
-print(resp.url)  # https://www.python.org/ (вывод адреса страницы)
+print(resp.url)  # https://www.python.org/ (адрес страницы)
 print(resp.encoding)  # utf-8 (кодировка)
 print(resp.text)  # html код страницы
 '''
