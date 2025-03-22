@@ -5221,7 +5221,7 @@ fig.add_trace(go.Scatter(x=x, y=x, mode='markers', name='g(x)=x',
                          marker=dict(color='LightSkyBlue', size=10, line=dict(color='Red', width=3))))
 fig.update_layout(legend_orientation="h",
                   legend=dict(x=.5, xanchor="center"),
-                  hovermode="x",  # показывает значение x, y сразу у обоих графиков
+                  hovermode="x",  # показывает значение "x" и "y" сразу у обоих графиков
                   margin=dict(l=0, r=0, t=0, b=0))
 fig.update_traces(hoverinfo="all", hovertemplate="Аргумент: %{x}<br>Функция: %{y}")
 fig.show()
