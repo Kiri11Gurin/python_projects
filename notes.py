@@ -5196,6 +5196,38 @@ plt.show()
 '''
 
 '''
+# МОДУЛЬ PLOTLY
+import plotly
+import plotly.graph_objs as go
+import plotly.express as px
+from plotly.subplots import make_subplots
+import numpy as np
+import pandas as pd
+
+
+def f(x):
+    return x**2
+
+
+x = np.arange(0, 5, 0.1)
+fig = px.scatter(x=x, y=f(x))  # построение точечного графика
+fig.show()
+
+fig = go.Figure()
+fig.update_xaxes(range=[-0.5, 1.5], zeroline=True, zerolinewidth=2, zerolinecolor='#008000')
+fig.update_yaxes(range=[-0.5, 1.5], zeroline=True, zerolinewidth=2, zerolinecolor='LightPink')
+fig.add_trace(go.Scatter(x=x, y=f(x), mode='lines+markers',  name='f(x)=x<sup>2</sup>'))
+fig.add_trace(go.Scatter(x=x, y=x, mode='markers', name='g(x)=x',
+                         marker=dict(color='LightSkyBlue', size=10, line=dict(color='Red', width=3))))
+fig.update_layout(legend_orientation="h",
+                  legend=dict(x=.5, xanchor="center"),
+                  hovermode="x",  # показывает значение x, y сразу у обоих графиков
+                  margin=dict(l=0, r=0, t=0, b=0))
+fig.update_traces(hoverinfo="all", hovertemplate="Аргумент: %{x}<br>Функция: %{y}")
+fig.show()
+'''
+
+'''
 # ЧЕРЕПАШЬЯ ГРАФИКА
 import turtle
 from random import randrange
