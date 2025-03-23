@@ -5244,7 +5244,7 @@ fig.show()
 fig = make_subplots(rows=2, cols=2,
                     specs=[[{"rowspan": 2}, {}],  # матрица 2х2 с описанием размера графиков
                            [None, {}]])  # None означает, что графика с координатами (1, 0) не существует
-fig.update_yaxes(range=[-0.5, 1.5], zeroline=True, zerolinewidth=2, zerolinecolor='LightPink', col=2)
+fig.update_yaxes(range=[-0.5, 1.5], zeroline=True, zerolinewidth=2, zerolinecolor='LightPink', row=1, col=2)
 fig.update_xaxes(range=[-0.5, 1.5], zeroline=True, zerolinewidth=2, zerolinecolor='#008000', col=2)
 fig.add_trace(go.Scatter(x=x, y=h(x),  name='h(x)=sin(x)'), 2, 2)
 fig.add_trace(go.Scatter(x=x, y=k(x),  name='k(x)=cos(x)'), 2, 2)
