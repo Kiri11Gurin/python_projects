@@ -5223,7 +5223,15 @@ def m(x):
 
 # 1-ый график
 x = np.arange(0, 5, 0.1)
-fig = px.scatter(x=x, y=f(x))  # построение точечного графика
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=x, y=f(x), mode='lines+markers', name='f(x)',
+                         marker=dict(color=f(x),  # цвет маркера в зависимости от значения функции
+                                     colorbar=dict(title="f(x)"),  # заголовок для colorbar
+                                     colorscale='Inferno',  # цвет для colorbar
+                                     size=20 + 3 * f(x))))  # размер маркера в зависимости от значения функции
+fig.update_layout(title="График функции f(x)",
+                  xaxis_title="x",
+                  yaxis_title="y")
 fig.show()
 
 # 2-ой график
