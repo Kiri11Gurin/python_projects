@@ -1,3 +1,7 @@
+import plotly.graph_objs as go
+import numpy as np
+import pandas as pd
+
 df = pd.read_csv(r"Распределение_по_возрастам.csv", delimiter=';')
 
 
