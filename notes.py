@@ -5195,6 +5195,7 @@ sns.heatmap(cor_df, annot=True, cmap='coolwarm')
 plt.show()
 '''
 
+'''
 # МОДУЛЬ PLOTLY
 import plotly
 import plotly.graph_objs as go
@@ -5203,7 +5204,6 @@ from plotly.subplots import make_subplots
 import numpy as np
 import pandas as pd
 
-'''
 
 def f(x):
     return x**2
@@ -5322,6 +5322,21 @@ fig.update_layout(title='Численность населения РФ по в�
 fig.update_traces(hoverinfo="all", hovertemplate="Возрастная группа: %{x}<br>Численность группы: %{y}")
 fig.layout.sliders = sliders
 fig.frames = frames
+fig.show()
+
+# диаграмма размаха или «ящик с усами»
+df = pd.read_csv(r"C:\\Users\\gurin\\Downloads\\Python\\6.csv", delimiter=';', decimal=',')
+print(df)
+fig = go.Figure()
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'A'], name='A', boxpoints='all'))
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'B'], name='B', boxpoints='all'))
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'C'], name='C', boxpoints='all'))
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'D'], name='D', boxpoints='all'))
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'E'], name='E', boxpoints='all'))
+fig.add_trace(go.Box(y=df['%_grad_on_time'][df['College'] == 'F'], name='F', boxpoints='all'))
+fig.update_layout(title="Доля успешно завершивших обучение колледже",
+                  yaxis_title="Успешно завершивших обучение",
+                  xaxis_title="Колледж")
 fig.show()
 '''
 
