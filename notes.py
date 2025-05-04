@@ -3457,8 +3457,9 @@ from dataclasses import dataclass, field, astuple, asdict
 # (frozen=False) атрибуты класса можно менять; (order=True) можно сравнить экземпляры класса >, <, <=, >= 
 @dataclass(frozen=False, order=True)
 class Point:
-    x: float = 0.0
+    x: float = 0.0  # без значения по умолчанию: "x: float"
     y: float = 0.0
+    color: tuple = field(default_factory=lambda: (0, 0, 0))
     coordinates: list = field(default_factory=list, repr=False)  # пустой список в качестве значения по умолчанию
     quadrant: int = field(init=False, compare=False, default=0)
 
@@ -3482,17 +3483,17 @@ class Point:
 
 
 point = Point(1, 2)
+print(point)  # Point(x=1, y=2, color=(0, 0, 0), quadrant=1)
 print(point == Point(1, 2))  # True
 print(point <= Point(2, 2))  # True (последовательное сравнение значений всех атрибутов для которых compare=True)
 print(point > Point(1, 3))  # False
-print(point)  # Point(x=1, y=2, quadrant=1)
 print(point.quadrant)  # 1
-print(point.symmetric_x())  # Point(x=1, y=-2, quadrant=4)
-print(point.symmetric_y())  # Point(x=-1, y=2, quadrant=2)
+print(point.symmetric_x())  # Point(x=1, y=-2, color=(0, 0, 0), quadrant=4)
+print(point.symmetric_y())  # Point(x=-1, y=2, color=(0, 0, 0), quadrant=2)
 point.coordinates.extend([(1, 2), (1, 1)])
 print(point.coordinates)  # [(1, 2), (1, 1)]
-print(asdict(point))  # {'x': 1, 'y': 2, 'coordinates': [(1, 2), (1, 1)], 'quadrant': 1}
-print(astuple(point))  # (1, 2, [(1, 2), (1, 1)], 1)
+print(asdict(point))  # {'x': 1, 'y': 2, 'color': (0, 0, 0), 'coordinates': [(1, 2), (1, 1)], 'quadrant': 1}
+print(astuple(point))  # (1, 2, (0, 0, 0), [(1, 2), (1, 1)], 1)
 '''
 
 '''
