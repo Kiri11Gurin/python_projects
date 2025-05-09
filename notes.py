@@ -274,7 +274,7 @@ a = fr'Hello What iS It1'
 
 # методы строк
 print(a.count('lo'))  # 1 (считает количество совпадений)
-print(a.find('iS', 1, 14))  # порядковый номер элемента, встречающегося 1-ый раз, если не встречается, то выводит -1
+print(a.find('iS', 2, 14))  # порядковый номер элемента, встречающегося 1-ый раз, если не встречается, то выводит -1
 # rfind, rindex (порядковый номер символа с конца), index аналогичен find, однако если вхождения нет, то выводит ошибку
 pattern = 'AT'
 data = 'ATTAAAGGTTTATACCTTCCCAGGT1!# AT'
@@ -339,17 +339,18 @@ print("''.isprintable():", ''.isprintable())
 print("''.isprintable():", ''.isprintable())  # False
 
 # форматирование строк
+# 1-ый аргумент - это длина результирующей строки, 2-ой - символ заполнение:
 print('a'.ljust(5, '*'))    # a****
 print('ab'.ljust(5, '$'))   # ab$$$
 print('abc'.ljust(5, '#'))  # abc##
 print('a'.rjust(3))    #   a
 print('ab'.rjust(3))   #  ab
 print('abc'.rjust(3))  # abc
+print(a.center(22, '%'))  # %%Hello What iS It1%%%
 print(a[::-1].upper())  # 1TI SI TAHW OLLEH (все буквы становятся заглавными и задом наперёд)
 print(a.capitalize())  # Hello what is it1 (первая буква заглавная, остальные строчные)
 print(a.title())  # Hello What Is It1 (первая буква каждого слова заглавная)
 print(a.swapcase())  # hELLO wHAT Is iT1 (замена регистра букв)
-print(a.center(25, '%'))  # 1-ый аргумент - это длина результирующей строки, 2-ой - символ заполнение
 print(a.capitalize().center(25, '1').upper().lower())  # методы строк выполняются по порядку
 
 a = '6539834dfg!'
@@ -382,16 +383,23 @@ print(list(chr(i) for i in range(ord('a'), ord('z') + 1)))  # ['a', 'b', 'c', 'd
 # f-строки, %, .format и т. д. более предпочтительные варианты форматирования, чем складывание строк,
 # так как при каждом складывании создаются временные строки, что использует много памяти:
 # "y" + " " + "e" + " " + "s" - в данном примере создаются 3 временные строки (количество операторов минус 1)
-x = 5 / 3
+number = 5 / 3
 a, b = 'Anthony', 'Joshua'
-print(f'Hello {a + " " + b}! You are {x ** 2 % 70} years old')  # наиболее функциональный вариант
+print(f'Hello {a + " " + b}! You are {number ** 2 % 70} years old')  # наиболее функциональный вариант
 print('Hello %s %s! You just delved into Python' % (b, a))  # выводит переменные по порядку
 print('Hello {} {}! You just delved into Python'.format(a, b))  # выводит переменные по порядку
 print('Hello {f_name} {s_name}! You just delved into Python'.format(f_name=a, s_name=b))
 print('Hello {1} {0}! You just delved into Python'.format(a, b))  # выводит переменные по номерам
-print(f'{x = }, {a=}')  # x = 5, a='Anthony'
+print(f'{number = }, {a=}')  # x = 5, a='Anthony'
 print("{:,.2f}".format(10000001.23554))  # 10,000,001.24 (2f - 2 знака после запятой)
-print(f'{5:02}')  # 05
+print(f'{100:.2f}')  # 100.00 (отображение целых чисел как вещественных)
+print(f'{number:.2f}')  # 1.67
+print(f'{number:*^16.2f}')  # ******1.67******
+print(f"|{number:25}|")    # |       1.6666666666666667| (25 - общая длина строки)
+print(f"|{number:<25}|")   # |1.6666666666666667       | (< - выравнивание по левому краю)
+print(f"|{number:>25}|")   # |       1.6666666666666667| (> - выравнивание по правому краю)
+print(f"|{number:^25}|")   # |   1.6666666666666667    | (^ - выравнивание по центру)
+print(f"|{number:-^25}|")  # |---1.6666666666666667----| (использование символа-заполнителя)
 '''
 
 '''
