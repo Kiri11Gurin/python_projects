@@ -2474,7 +2474,7 @@ class ElectricCar:
     @property
     def owner(self):  # геттер
         print(f'вызов свойства owner (геттер) для {self._owner}')
-        return self._owner  # если имя атрибута начинается с одного нижнего подчеркивания, то он считается защищенным
+        return self._owner  # если имя атрибута начинается с одного нижнего подчеркивания, то он считается защищённым
 
     @owner.setter  # сеттер
     def owner(self, owner):  # имена методов сеттера, геттера и делитера должны совпадать
@@ -2833,7 +2833,7 @@ print(abs(func))  # 2.449489742783178
 # Разница между __getattribute__() и __getattr__() в том, что __getattribute__() вызывается первым и вызывается всегда,
 # а метод __getattr__() вызывается только в том случае, если атрибута, к которому происходит обращение, не существует.
 class ProtectedObject:
-    """Класс запрещает получение, изменение и удаление защищенных атрибутов своих экземпляров."""
+    """Класс запрещает получение, изменение и удаление защищённых атрибутов своих экземпляров."""
     def __init__(self, **kwargs):
         print(f'вызов метода __init__()')
         for name, value in kwargs.items():
@@ -2843,19 +2843,19 @@ class ProtectedObject:
     def __getattribute__(self, name):
         print('вызов метода __getattribute__()')
         if name.startswith('_'):
-            raise AttributeError('Доступ к защищенному атрибуту невозможен')
+            raise AttributeError('Доступ к защищённому атрибуту невозможен')
         return object.__getattribute__(self, name)
 
     def __setattr__(self, name, value):
         print('вызов метода __setattr__()')
         if name.startswith('_'):
-            raise AttributeError('Доступ к защищенному атрибуту невозможен')
+            raise AttributeError('Доступ к защищённому атрибуту невозможен')
         object.__setattr__(self, name, value)
 
     def __delattr__(self, name):
         print('вызов метода __delattr__()')
         if name.startswith('_'):
-            raise AttributeError('Доступ к защищенному атрибуту невозможен')
+            raise AttributeError('Доступ к защищённому атрибуту невозможен')
         object.__delattr__(self, name)
 
 
@@ -2863,7 +2863,7 @@ user = ProtectedObject(login='PG_kamiya', _password='alreadybanned')
 user.login = 'new_login'
 print(user.login)
 del user.login
-# print(user._password) # AttributeError: Доступ к защищенному атрибуту невозможен
+# print(user._password) # AttributeError: Доступ к защищённому атрибуту невозможен
 
 
 # протокол итерируемых объектов и итераторов
