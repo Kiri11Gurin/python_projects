@@ -927,7 +927,7 @@ d.move_to_end('e', last=False)  # перемещение указанного к
 print(d)  # OrderedDict([('e', 5), ('c', 3), ('d', 4), ('b', 2)])
 
 from collections import defaultdict
-# В отличие от обычных словарей если нет ключа, то создаёт ключ со значением по умолчанию (для int равен 0).
+# В отличие от обычных словарей если нет ключа, то создаёт ключ со значением по умолчанию (например, для int равен 0).
 # Создание новых пар ключ-значение, используя defaultdict быстрее, чем методы setdeafult() и get() для словарей.
 info = defaultdict(int, {'name': 'Timur', 'age': 29, 'job': 'Teacher'})
 print(info['name'])  # Timur
