@@ -1266,24 +1266,24 @@ print(~37)  # -38 (инверсия, НЕ)
 # Приоритет логических операторов: not, and, or.
 # Для and: если логическое выражение вернуло ложь, то последующие не проверяются, результат выражения будет False.
 # Для or: если логическое выражение вернуло истину, то последующие не проверяются, результат выражения будет True.
-print(bool(0))  # False
-print(bool('0'))  # нулевое значение или None - "False", ненулевое - "True"
-print(bool(''))  # пустая строка (список и т. д.) - "False", непустая - "True"
+print(f'bool(0) = {bool(0)}')  # False
+print(f"bool('0') = {bool('0')}")  # нулевое значение или None - "False", ненулевое - "True"
+print(f"bool('') = {bool('')}")  # пустая строка (список и т. д.) - "False", непустая - "True"
 # Согласно PEP 8 предпочтительнее использовать isinstance чем type(...) == ...,
 # однако необходимо помнить, что isinstance принимает True и False за int.
-print(isinstance([1, 2, 3], list))  # True
-print(isinstance(True, int))  # True (True & False относятся к int)
-print(isinstance(True, float))  # False
-print(isinstance(10.5, (int, float)))  # True (можно передать кортеж из типов)
+print(f"isinstance([1, 2, 3], list) = {isinstance([1, 2, 3], list)}")  # True
+print(f"isinstance(True, int) = {isinstance(True, int)}")  # True (True и False относятся к int)
+print(f"isinstance(True, float) = {isinstance(True, float)}")  # False
+print(f"isinstance(10.5, (int, float)) = {isinstance(10.5, (int, float))}")  # True (можно передать кортеж из типов)
 print(int(True), int(False))  # 1 0
 print(float(True), float(False))  # 1.0 0.0
 
-print(not [])  # not возвращает булево значение
-print(1 and [] and 3)  # возвращает 1-ый ложный операнд, либо последний, если все истинные
-print([] or 1 or 2)  # возвращает 1-ый истинный операнд, либо последний, если все ложные
+print(f"not [] = {not []}")  # not возвращает булево значение
+print(f"1 and [] and 3 = {1 and [] and 3}")  # and возвращает 1-ый ложный операнд, либо последний, если все истинные
+print(f"[] or 1 or 2 = {[] or 1 or 2}")  # or возвращает 1-ый истинный операнд, либо последний, если все ложные
 
-print(1 + True)  # 2 (True принимается за 1)
-print(1 + False)  # 1 (False принимается за 0)
+print(f"1 + True = {1 + True}")  # 2 (True принимается за 1)
+print(f"1 + False = {1 + False}")  # 1 (False принимается за 0)
 
 # исключение нулевых значений
 # 1-ый способ:
