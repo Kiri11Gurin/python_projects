@@ -1338,6 +1338,7 @@ except (KeyError, IndexError) as error:
     print(type(error))  # <class 'IndexError'>
     print(type(error).__name__)  # IndexError
 
+
 # Инструкции внутри блока finally будут выполнены, даже если блок try содержит break, continue, return.
 def try_func():
     print('start')
@@ -1345,7 +1346,7 @@ def try_func():
         print('Выполняется блок try!')
         x = 'try'
         # print(x / 0)
-        return x
+        # return x
     except:
         print('Выполняется блок except!')
         x = 'except'
@@ -1357,7 +1358,7 @@ def try_func():
     finally:
         print('Выполняется блок finally!')
         x = 'finally'
-        # return x
+        return x
 
 
 print(try_func())
