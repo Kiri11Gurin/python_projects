@@ -72,6 +72,10 @@ print(math.log(1000, 10))  # 2.9999999999999996
 # Проверка на то, является ли число целым:
 print(math.log2(64).is_integer())  # True
 print(math.log2(65).is_integer())  # False
+
+# Узнать количество цифр в положительном числе:
+print(int(math.log10(1000)) + 1)  # 4
+print(int(math.log10(99990)) + 1)  # 5
 '''
 
 '''
