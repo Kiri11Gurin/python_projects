@@ -1565,68 +1565,6 @@ for i in range(len(a) - 1):
 '''
 
 '''
-# ВСТРОЕННЫЕ ФУНКЦИИ ALL & ANY
-# Функция all проверяет каждый элемент последовательности на истинность.
-print(all(i.isdigit() for i in '12354635'))  # True (функции all и any работают с итераторами)
-print(all([1, 2, 3]))  # True
-print(all([1, 2, 3, 0, 5]))  # False
-print(all([False, 4, 1]))  # False
-print(all(('', 'red', 'green')))  # False
-print(all({0: 'Zero', 1: 'One', 2: 'Two'}))  # False (проверяет ключи, но не значения)
-print(all({'Zero': 0, 'One': 1, 'Two': 2}))  # True
-# Функция any возвращает True если хотя бы один элемент последовательности является истинным.
-print(any([0, 1, 0]))  # True
-print(any([False, 0, 1]))  # True
-print(any(['', [], 'green']))  # True
-print(any([]))  # False
-print(all([]))  # True
-'''
-
-'''
-# ВСТРОЕННЫЕ ФУНКЦИИ ZIP & ENUMERATE (являются итераторами)
-# Количество кортежей, получаемых в ходе функции zip определяется
-# по минимальной длине среди всех коллекций, участвующих в функции.
-first = 'a b c d e f g'.split(' ')  # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-second = '1 2 3 4 5 6 7'.split(' ')  # ['1', '2', '3', '4', '5', '6', '7']
-# При strict=True вызывает ошибку ValueError, если длины объектов не совпадают:
-x_zip = zip(first, second, first, strict=True)
-print(x_zip, type(x_zip))  # <zip object at 0x000001E40C5D47C0> <class 'zip'>
-print(list(x_zip))  # [('a', '1', 'a'), ('b', '2', 'b'), ('c', '3', 'c'), ('d', '4', 'd'), ('e', '5', 'e'), ...]
-
-matrix = [[7, 2, 9], [4, 5, 6], [1, 8, 3]]
-print(list(zip(*matrix)))  # [(7, 4, 1), (2, 5, 8), (9, 6, 3)] (транспонирование матрицы)
-
-colors = ['red', 'green', 'blue']
-pairs = enumerate(colors, 5)
-print(pairs, type(pairs))  # <enumerate object at 0x000001AB393D4780> <class 'enumerate'>
-print(list(pairs))  # [(5, 'red'), (6, 'green'), (7, 'blue')]
-for pair in enumerate(colors, 10):
-    print(pair)  # (10, 'red') и т. д.
-
-models = ['decision tree', 'linear model', 'svm', 'ensemble']
-# Функция zip возвращает пару элементов, которые можно записать в 2 разные переменные в цикле for.
-# Записываем первый элемент пары в num, второй - в model:
-for num, model in zip(range(len(models)), models):
-    print(num + 1, 'model is:', model)  # 1 model is: decision tree и т. д.
-
-for num, model in enumerate(models):  # аналогично предыдущей записи
-    print(num + 1, 'model is:', model)
-
-# ZIP & UNZIP
-a = [1, 2, 3]
-b = [4, 5, 6]
-f = list(zip(a, b))
-print(f, type(f))  # [(1, 4), (2, 5), (3, 6)] <class 'list'>
-c, d = zip(*f)
-print(c, type(c))  # (1, 2, 3) <class 'tuple'>
-print(list(d))  # [4, 5, 6]
-
-# разбиение коллекции на заданное количество частей
-lst = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-print(list(zip(*[iter(lst)] * 3)))  # [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
-'''
-
-'''
 # РАСПАКОВКА (ДЕСТРУКТУРИЗАЦИЯ, UNPACKING) И УПАКОВКА (ОПЕРАТОР *)
 a, *b, c = (1, 2, 3, 4, 5)
 print(a, type(a), c)  # 1 <class 'int'> 5
@@ -1683,60 +1621,106 @@ code = """for i in range(10):
         print(i)"""
 exec(code)
 
-numbers = [10, -7, 8, -100, -50, 32, 87, 117, -210]
-print(max(numbers, key=abs))  # -210 (также можно использовать: key=len, key=numbers.index)
-print(min(numbers, key=abs))  # -7
-print(sorted(numbers, key=abs, reverse=True))  # [-210, 117, -100, 87, -50, 32, 10, 8, -7]
-print((sum([1, 2], 10)))  # 13 (второй аргумент - это значение по умолчанию)
+# ВСТРОЕННЫЕ ФУНКЦИИ ALL & ANY
+# Функция all проверяет каждый элемент последовательности на истинность.
+print(all(i.isdigit() for i in '12354635'))  # True (функции all и any работают с итераторами)
+print(all([1, 2, 3]))  # True
+print(all([1, 2, 3, 0, 5]))  # False
+print(all([False, 4, 1]))  # False
+print(all(('', 'red', 'green')))  # False
+print(all({0: 'Zero', 1: 'One', 2: 'Two'}))  # False (проверяет ключи, но не значения)
+print(all({'Zero': 0, 'One': 1, 'Two': 2}))  # True
+# Функция any возвращает True если хотя бы один элемент последовательности является истинным.
+print(any([0, 1, 0]))  # True
+print(any([False, 0, 1]))  # True
+print(any(['', [], 'green']))  # True
+print(any([]))  # False
+print(all([]))  # True
 
-points = [(1, -1), (29, 9), (2, 3), (-10, 15), (10, 9), (7, 18), (1, 5), (2, -4)]
-points.sort()  # либо print(sorted(points))
-# Сортировка пройдет по первым значениям пар кортежа, а в случае их равенства, по вторым:
-print(points)  # [(-10, 15), (1, -1), (1, 5), (2, -4), (2, 3), (7, 18), (10, 9)]
+# ВСТРОЕННЫЕ ФУНКЦИИ ZIP & ENUMERATE (являются итераторами)
+# Количество кортежей, получаемых в ходе функции zip определяется
+# по минимальной длине среди всех коллекций, участвующих в функции.
+first = 'a b c d e f g'.split(' ')  # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+second = '1 2 3 4 5 6 7'.split(' ')  # ['1', '2', '3', '4', '5', '6', '7']
+# При strict=True вызывает ошибку ValueError, если длины объектов не совпадают:
+x_zip = zip(first, second, first, strict=True)
+print(x_zip, type(x_zip))  # <zip object at 0x000001E40C5D47C0> <class 'zip'>
+print(list(x_zip))  # [('a', '1', 'a'), ('b', '2', 'b'), ('c', '3', 'c'), ('d', '4', 'd'), ('e', '5', 'e'), ...]
+
+matrix = [[7, 2, 9], [4, 5, 6], [1, 8, 3]]
+print(list(zip(*matrix)))  # [(7, 4, 1), (2, 5, 8), (9, 6, 3)] (транспонирование матрицы)
+
+colors = ['red', 'green', 'blue']
+pairs = enumerate(colors, 5)
+print(pairs, type(pairs))  # <enumerate object at 0x000001AB393D4780> <class 'enumerate'>
+print(list(pairs))  # [(5, 'red'), (6, 'green'), (7, 'blue')]
+for pair in enumerate(colors, 10):
+    print(pair)  # (10, 'red') и т. д.
+
+models = ['decision tree', 'linear model', 'svm', 'ensemble']
+# Функция zip возвращает пару элементов, которые можно записать в 2 разные переменные в цикле for.
+# Записываем первый элемент пары в num, второй - в model:
+for num, model in zip(range(len(models)), models):
+    print(num + 1, 'model is:', model)  # 1 model is: decision tree и т. д.
+
+for num, model in enumerate(models):  # аналогично предыдущей записи
+    print(num + 1, 'model is:', model)
+
+# ZIP & UNZIP
+a = [1, 2, 3]
+b = [4, 5, 6]
+f = list(zip(a, b))
+print(f, type(f))  # [(1, 4), (2, 5), (3, 6)] <class 'list'>
+c, d = zip(*f)
+print(c, type(c))  # (1, 2, 3) <class 'tuple'>
+print(list(d))  # [4, 5, 6]
+
+# разбиение коллекции на заданное количество частей
+lst = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(list(zip(*[iter(lst)] * 3)))  # [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
 
 
-def compare_by_second(point):
-    return point[1], point[0]  # кортеж условий сравнения
-# Сначала сортировка идёт по point[1] (2-му элементу), если они равны, то по point[0] (1-му элементу).
-# Можно задать кортеж с любым количеством условий сравнения.
+# КЛЮЧЕВЫЕ СЛОВА GLOBAL & NONLOCAL
+x = 60
 
 
-def compare_by_sum(point): return point[0] + point[1]  # способ записи функции в одну строку
+def aa():
+    x = 2
+    print(x)
+
+    def bb():
+        # global x
+        # nonlocal x
+        x = 5
+        print(x)
+        print(f'bb_function: {locals()}')
+
+    bb()
+    print(x)
+    print(f'aa_function: {locals()}')
 
 
-# Функция, используемая в аргументе key должна обязательно иметь какой-либо параметр (при определении функции).
-print(sorted(points, key=compare_by_second))   # сортируем по второму значению кортежа
-print(sorted(points, key=lambda point: (point[1], point[0])))  # аналогично предыдущему
-print(sorted(points, key=compare_by_sum))      # сортируем по сумме кортежа
+aa()
+print(x)
 
 
-def sort_priority(numbers, group):
-    """Приоритетная сортировка, если в сортируемом списке numbers содержится число из group."""
-    numbers.sort(key=lambda x: (x not in group, x))
+# вызов функции через словарь
+def start():
+    print("Let's start")
 
 
-numbers = [8, 3, 1, 2, 5, 4, 7, 6]
-group = {5, 7, 2, 3}
-sort_priority(numbers, group)
-print(numbers)  # [2, 3, 5, 7, 1, 4, 6, 8]
-print(sorted([(True, 4), (False, 4)]))  # функция sort_priority работает аналогично этому примеру (False = 0, True = 1)
-print(sorted(numbers, key=lambda x: (x % 2 == 1, x)))  # сначала выводятся чётные числа по возрастанию, затем нечётные
+def stop():
+    print("Let's stop")
 
 
-# В функции сначала указываются обязательные параметры (message),
-# а потом параметры по умолчанию (times=1), иначе будет ошибка.
-def say(message, times=1):  # значение times по умолчанию 1, но его можно поменять
-    print(message * times)
+def pause():
+    print("Let's pause")
 
 
-# say(message=1, times) # ошибка т. к. именованный аргумент стоит до позиционного
-# say(times, message=1) # сначала должны идти позиционные аргументы (times), затем именованные (message=1)
-say('44', 2)  # 4444
-say('33')  # 33
-say(message='33')  # значение аналогично предыдущему
-say(message='44', times=3)  # использование именованных аргументов
-say(times=3, message='44')  # аналогично предыдущему
-print(say('44', 2))  # None (если return не указан, то по умолчанию возвращается значение None)
+commands = {'start': start, 'stop': stop, 'pause': pause}  # словарь соответствия команда-функция
+# Сначала необходимо задать функции, чтобы сохранить их в словарь, либо в переменную.
+for command in commands:  # в словаре в качестве значений пишется функция без скобок
+    commands[command]()  # вызываем нужную функцию через словарь по ключу со скобками в конце
 
 
 # ОПЕРАТОР RETURN
@@ -1786,23 +1770,21 @@ print(append_func(10))  # [10]
 print(append_func(5))  # [5]
 
 
-# вызов функции через словарь
-def start():
-    print("Let's start")
+# ПАРАМЕТРЫ И АРГУМЕНТЫ ФУНКЦИИ
+# В функции сначала указываются обязательные параметры (message),
+# а потом параметры по умолчанию (times=1), иначе будет ошибка.
+def say(message, times=1):  # значение times по умолчанию 1, но его можно поменять
+    print(message * times)
 
 
-def stop():
-    print("Let's stop")
-
-
-def pause():
-    print("Let's pause")
-
-
-commands = {'start': start, 'stop': stop, 'pause': pause}  # словарь соответствия команда-функция
-# Сначала необходимо задать функции, чтобы сохранить их в словарь, либо в переменную.
-for command in commands:  # в словаре в качестве значений пишется функция без скобок
-    commands[command]()  # вызываем нужную функцию через словарь по ключу со скобками в конце
+# say(message=1, times) # ошибка т. к. именованный аргумент стоит до позиционного
+# say(times, message=1) # сначала должны идти позиционные аргументы (times), затем именованные (message=1)
+say('44', 2)  # 4444
+say('33')  # 33
+say(message='33')  # значение аналогично предыдущему
+say(message='44', times=3)  # использование именованных аргументов
+say(times=3, message='44')  # аналогично предыдущему
+print(say('44', 2))  # None (если return не указан, то по умолчанию возвращается значение None)
 
 
 # *args позволяет передавать функции произвольное число неименованных аргументов (кортеж)
@@ -1847,7 +1829,7 @@ print(remove_marks.__dict__)  # {'count': 4}
 print(remove_marks.count)  # 4
 
 
-# полезные функции
+# ПОЛЕЗНЫЕ ФУНКЦИИ
 def evklid(a: int, b: int) -> int:
     """Функция находит НОД (наибольший общий делитель), используя алгоритм Евклида.
     a * b = НОД * НОК"""
@@ -1885,8 +1867,8 @@ def chunked(s: str, n: int) -> list:
 print(chunked('a b c d e f r g b', 5))  # [['a', 'b', 'c', 'd', 'e'], ['f', 'r', 'g', 'b']]
 
 
-# бинарный поиск
 def binary_search(data, target):
+    """Функция возвращает индекс элемента, осуществляя бинарный поиск."""
     left, right = 0, len(data) - 1
     while left <= right:
         middle = left + (right - left) // 2  # рекомендуется использовать left + (right - left) // 2 вместо
@@ -1922,10 +1904,50 @@ func = lambda *args: args[0] * args[1]
 print(func(2, 3, 4))  # 6
 print((lambda x, y: x + y)(5, 10))  # 15
 
-# ФУНКЦИИ ВЫСШЕГО ПОРЯДКА – функции, которые принимают или/и возвращают другие функции (map, filter, min, max, sorted).
+# ФУНКЦИИ ВЫСШЕГО ПОРЯДКА – функции, которые принимают или/и возвращают другие функции (min, max, sorted, map, filter).
 # ФУНКЦИЯ ВЫСШЕГО ПОРЯДКА MAP (является итератором)
 # Применяет указанную функцию к каждому элементу указанной последовательности/последовательностей.
 # Функция, используемая в map или filter должна обязательно принимать аргумент.
+numbers = [10, -7, 8, -100, -50, 32, 87, 117, -210]
+print(min(numbers, key=abs))  # -7
+print(max(numbers, key=abs))  # -210 (также можно использовать: key=len, key=numbers.index)
+print(sorted(numbers, key=abs, reverse=True))  # [-210, 117, -100, 87, -50, 32, 10, 8, -7]
+print((sum([1, 2], 10)))  # 13 (второй аргумент - это значение по умолчанию)
+
+points = [(1, -1), (29, 9), (2, 3), (-10, 15), (10, 9), (7, 18), (1, 5), (2, -4)]
+points.sort()  # либо print(sorted(points))
+# Сортировка пройдет по первым значениям пар кортежа, а в случае их равенства, по вторым:
+print(points)  # [(-10, 15), (1, -1), (1, 5), (2, -4), (2, 3), (7, 18), (10, 9)]
+
+
+def compare_by_second(point):
+    return point[1], point[0]  # кортеж условий сравнения
+# Сначала сортировка идёт по point[1] (2-му элементу), если они равны, то по point[0] (1-му элементу).
+# Можно задать кортеж с любым количеством условий сравнения.
+
+
+def compare_by_sum(point): return point[0] + point[1]  # способ записи функции в одну строку
+
+
+# Функция, используемая в аргументе key должна обязательно иметь какой-либо параметр (при определении функции).
+print(sorted(points, key=compare_by_second))   # сортируем по второму значению кортежа
+print(sorted(points, key=lambda point: (point[1], point[0])))  # аналогично предыдущему
+print(sorted(points, key=compare_by_sum))      # сортируем по сумме кортежа
+
+
+def sort_priority(numbers, group):
+    """Приоритетная сортировка, если в сортируемом списке numbers содержится число из group."""
+    numbers.sort(key=lambda x: (x not in group, x))
+
+
+numbers = [8, 3, 1, 2, 5, 4, 7, 6]
+group = {5, 7, 2, 3}
+sort_priority(numbers, group)
+print(numbers)  # [2, 3, 5, 7, 1, 4, 6, 8]
+print(sorted([(True, 4), (False, 4)]))  # функция sort_priority работает аналогично этому примеру (False = 0, True = 1)
+print(sorted(numbers, key=lambda x: (x % 2 == 1, x)))  # сначала выводятся чётные числа по возрастанию, затем нечётные
+
+# MAP (является итератором)
 x = [1.0, -2.0, 3.0]
 l1_norm = lambda x: sum(map(abs, x))
 print(l1_norm(x))  # 6.0
@@ -1953,7 +1975,8 @@ list2 = [4, 3, 2, 1]
 print(list(map(a_na_b, list1, list2)))  # [4, 6, 6, 4]
 print(list(map(lambda a, b: a * b, list1, list2)))  # [4, 6, 6, 4] (аналогично предыдущему)
 
-# ФУНКЦИЯ ВЫСШЕГО ПОРЯДКА FILTER (является итератором)
+
+# FILTER (является итератором)
 # В отличие от map фильтрующая функция не изменяет элементы последовательности,
 # а исключает элементы, не удовлетворяющие условиям функции.
 def is_greater10(num):
@@ -2032,29 +2055,6 @@ print(compose(mul_7, add_3)(1))  # 28
 print(compose(add_3, mul_7)(2))  # 17
 print(compose(mul_7, str)(3))   # 3333333
 print(compose(str, mul_7)(5))   # 35
-
-# КЛЮЧЕВЫЕ СЛОВА GLOBAL & NONLOCAL
-x = 60
-
-
-def aa():
-    x = 2
-    print(x)
-
-    def bb():
-        # global x
-        # nonlocal x
-        x = 5
-        print(x)
-        print(f'bb_function: {locals()}')
-
-    bb()
-    print(x)
-    print(f'aa_function: {locals()}')
-
-
-aa()
-print(x)
 
 
 # ЗАМЫКАНИЕ (CLOSURE) - функция, которая находится внутри другой функции
