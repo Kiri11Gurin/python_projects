@@ -1686,22 +1686,22 @@ x = 60
 
 def aa():
     x = 2
-    print(x)
+    print(x)  # первый вывод переменной "x"
 
     def bb():
         # global x
         # nonlocal x
         x = 5
-        print(x)
+        print(x)  # второй вывод переменной "x"
         print(f'bb_function: {locals()}')
 
     bb()
-    print(x)
+    print(x)  # третий вывод переменной "x"
     print(f'aa_function: {locals()}')
 
 
 aa()
-print(x)
+print(x)  # четвёртый вывод переменной "x"
 
 
 # вызов функции через словарь
@@ -1880,6 +1880,28 @@ def binary_search(data, target):
         else:
             return middle
     return -1
+
+
+def f(x):
+    return x**5 + 5*x**3 + 3*x - 4
+
+
+def binary_search_2(func):
+    """Вычисление корня уравнения с помощью вещественного бинарного поиска."""
+    left, right = 0, 1
+    epsilon = 0.000001
+
+    while right - left > epsilon:
+        middle = (left + right) / 2
+
+        if f(middle) < 0:
+            left = middle
+        else:
+            right = middle
+    return left
+
+
+print(binary_search_2(f))
 
 
 def euler_76(num=100):
