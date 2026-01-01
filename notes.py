@@ -1889,9 +1889,9 @@ def f(x):
 def binary_search_2(func):
     """Вычисление корня уравнения с помощью вещественного бинарного поиска."""
     left, right = 0, 1
-    epsilon = 0.000001
+    epsilon = 0.000001  # не нужен если используется цикл for
 
-    while right - left > epsilon:
+    while right - left > epsilon:  # либо: for _ in range(100): (отрезок уменьшится в 2**100 ≈ 10**30 раз)
         middle = (left + right) / 2
 
         if f(middle) < 0:
