@@ -1021,10 +1021,10 @@ print(counter)  # Counter({'a': 5, 'c': 0, 'b': -9})
 print(+counter)  # Counter({'a': 5}) (выводит положительные элементы)
 print(-counter)  # Counter({'b': 9}) (выводит отрицательные элементы)
 
-# Сравнение рассматривает нулевые значения как отсутствующие:
-counter1 = Counter(i=4)
-counter2 = Counter(s=0, i=4)
-print(counter1 == counter2)  # True
+# Сравнение:
+print(Counter(i=4) == Counter(s=0, i=4))  # True  (нулевые значения рассматриваются как отсутствующие)
+print(Counter('iim') > Counter('ii'))  # True
+print(Counter('ii') > Counter('ii'))  # False
 
 # Допускается складывание строк и других объектов:
 counter1 = Counter(i=4, s='4')
@@ -1862,7 +1862,7 @@ def chunked(s: str, n: int) -> list:
     s = s.split()
     for i in range(0, len(s), n):
         print(i)
-        result.append(s[i : i+n])  # отступы в срезе согласно PEP 8
+        result.append(s[i : i+n])  # отступы в срезе согласно PEP 8 (s[i:i+n] и s[i : i + n] тоже верно)
     return result
 
 
