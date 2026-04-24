@@ -1885,7 +1885,7 @@ def binary_search(data, target):
 
 
 def f(x):
-    return x**5 + 5*x**3 + 3*x - 4
+    return x**5 + 5 * x**3 + 3*x - 4
 
 
 def binary_search_2(func):
@@ -1904,6 +1904,46 @@ def binary_search_2(func):
 
 
 print(binary_search_2(f))
+
+
+def rotate90(matrix):
+    n = len(matrix)
+
+    for i in range(n):
+        for j in range(i):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+    for i in range(n):
+        for j in range(n // 2):
+            matrix[i][j], matrix[i][~j] = matrix[i][~j], matrix[i][j]  # ~j аналогично n - j - 1 или -j - 1
+
+
+matrix = [[1, 1, 1],
+          [0, 1, 0],
+          [0, 1, 0]]
+
+rotate90(matrix)
+print(*matrix, sep='\n')
+         
+
+def create_matrix(n, m):
+    """Заполнение матрицы по спирали."""
+    matrix = [[0 for _ in range(m)] for _ in range(n)]
+    row, col, drow, dcol = 0, 0, 0, 1
+    for num in range(n * m):
+        matrix[row][col] = num + 1
+        
+        if matrix[(row + drow) % n][(col + dcol) % m]:
+            drow, dcol = dcol, -drow
+            
+        row += drow
+        col += dcol
+
+    return matrix
+
+
+matrix = create_matrix(5, 5)
+print(*matrix, sep='\n')
 
 
 def euler_76(num=100):
@@ -1940,7 +1980,7 @@ print((sum([1, 2], 10)))  # 13 (второй аргумент - это знач�
 
 points = [(1, -1), (29, 9), (2, 3), (-10, 15), (10, 9), (7, 18), (1, 5), (2, -4)]
 points.sort()  # либо print(sorted(points))
-# Сортировка пройдет по первым значениям пар кортежа, а в случае их равенства, по вторым:
+# Сортировка идёт по первым значениям пар кортежа, а в случае их равенства, по вторым:
 print(points)  # [(-10, 15), (1, -1), (1, 5), (2, -4), (2, 3), (7, 18), (10, 9)]
 
 
