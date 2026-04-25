@@ -301,9 +301,9 @@ print('rtd\nsdf\n\tsdf')
 text = ("способ переноса текста на другую "
         "строку (вывод не меняется)")  # либо использовать тройные кавычки, тогда текст будет на разных строках
 print(text)
-a = fr'Hello What iS It1'
 
 # методы строк
+a = fr'Hello What iS It1'
 print(a.count('lo'))  # 1 (считает количество совпадений)
 print(a.find('iS', 2, 14))  # порядковый номер элемента, встречающегося 1-ый раз, если не встречается, то выводит -1
 # rfind, rindex (порядковый номер символа с конца), index аналогичен find, однако если вхождения нет, то выводит ошибку
@@ -401,14 +401,6 @@ print(a.split())  # ['6539834dfg!'] (аналогично [a])
 print(str(a))  # 6539834dfg! (строковое представление объекта в неформальном виде (понятному человеку))
 print(repr(a))  # '6539834dfg!' (строковое представление объекта в формальном виде (понятному интерпретатору Python))
 print('aab' > 'a', 'aab' > 'aac')  # True False (происходит посимвольное сравнение значений функцией ord)
-'''
-
-'''
-# МОДУЛЬ STRING
-import string
-print(string.punctuation)  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
-print(string.ascii_lowercase)  # abcdefghijklmnopqrstuvwxyz
-print(string.ascii_uppercase)  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
 print(ord('A'), ord('a'))  # 65 97 (код символа в таблице символов Unicode)
 print(list(chr(i) for i in range(ord('a'), ord('z') + 1)))  # ['a', 'b', 'c', 'd', 'e', 'f', ...] (вывод всех букв)
 '''
@@ -442,6 +434,14 @@ print(f'{num:o}')  # 1750 (перевод числа в восьмеричную
 print(f'{num:x}')  # 3e8 (перевод числа в шестнадцатеричную систему, латинские буквы строчные)
 print(f'{num:X}')  # 3E8 (перевод числа в шестнадцатеричную систему, латинские буквы заглавные)
 print(f'{num:07X}')  # 00003E8 (заполнение нулями с левой стороны до длины строки равной 7)
+'''
+
+'''
+# МОДУЛЬ STRING
+import string
+print(string.punctuation)  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+print(string.ascii_lowercase)  # abcdefghijklmnopqrstuvwxyz
+print(string.ascii_uppercase)  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
 '''
 
 '''
