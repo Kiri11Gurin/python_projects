@@ -1638,6 +1638,9 @@ print(hash(100.89))  # 2052200278200189028 (хеш-значение переда
 list_data = eval("['Python', 'C#']")  # будет ошибка при использовании while, for, if, def, import, class, raise и т. д.
 print(list_data, type(list_data), len(list_data))  # ['Python', 'C#'] <class 'list'> 2
 print(eval('x-y+z', {'x': 1, 'y': 2, 'z': 3}))  # 2
+a, b = -2, 2
+print(eval(f'{a} ** {b}'))  # -4
+print(eval(f'a ** b'))  # 4
 code = """for i in range(10):
     if i % 2 == 0:
         print(i)"""
@@ -2102,7 +2105,7 @@ print(only_letters)  # ['x', 'y', 'a']
 
 # ВЛОЖЕННЫЕ ФУНКЦИИ
 # 1-ый способ:
-def generator_square_polynom(a, b, c):
+def generator_square_polynom_1(a, b, c):
     def square_polynom(x):
         print(f'inner_function: {locals()}')
         return a * x ** 2 + b * x + c
@@ -2118,8 +2121,8 @@ def generator_square_polynom_2(a, b, c):
 # 3-ий способ:
 generator_square_polynom_3 = lambda a, b, c: lambda x: a * x**2 + b * x + c
 
-print(generator_square_polynom(a=-3, b=-10, c=50)(x=-1))  # 57
-equation = generator_square_polynom(1, 2, 4)
+print(generator_square_polynom_1(a=-3, b=-10, c=50)(x=-1))  # 57
+equation = generator_square_polynom_1(1, 2, 4)
 print(equation(2), equation(7))  # 12 67
 
 
