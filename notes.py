@@ -373,6 +373,7 @@ print("''.isprintable():", ''.isprintable())
 print("''.isprintable():", ''.isprintable())  # False
 
 # форматирование строк
+print('-10'.zfill(5))  # -0010 (если строка включает префикс + или -, то нули будут добавлены после префикса)
 # 1-ый аргумент - это длина результирующей строки, 2-ой - символ заполнение:
 print('a'.ljust(5, '*'))    # a****
 print('ab'.ljust(5, '$'))   # ab$$$
@@ -2691,6 +2692,7 @@ class NonNegativeInteger:
             return self
         if self.name in obj.__dict__:
             return obj.__dict__[self.name]
+            # return getattr(obj, self.name)  # аналогично предыдущему
         elif self.default is None:
             raise AttributeError('Атрибут не найден')
         else:
@@ -2700,6 +2702,7 @@ class NonNegativeInteger:
         print(f'вызов метода __set__ для: {obj = }, {value = }')  # (non-data descriptor) и строка student.score будет
         if isinstance(value, int) and value >= 0:  # обращаться к атрибуту score, а не к дескриптору, аналогично
             obj.__dict__[self.name] = value  # и self.score = score приведёт к установке объекту self атрибута score.
+            # setattr(obj, self.name, value)  # аналогично предыдущему
         else:
             raise ValueError('Некорректное значение')
 
