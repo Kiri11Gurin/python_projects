@@ -413,13 +413,13 @@ print(list(chr(i) for i in range(ord('a'), ord('z') + 1)))  # ['a', 'b', 'c', 'd
 # так как при каждом складывании создаются временные строки, что использует много памяти:
 # "y" + " " + "e" + " " + "s" - в данном примере создаются 3 временные строки (количество операторов минус 1)
 number = 5 / 3
-a, b = 'Anthony', 'Joshua'
+a, b = 'James', 'Bond'
 print(f'Hello {a + " " + b}! You are {number ** 2 % 70} years old')  # наиболее функциональный вариант
 print('Hello %s %s! You just delved into Python' % (b, a))  # выводит переменные по порядку
 print('Hello {} {}! You just delved into Python'.format(a, b))  # выводит переменные по порядку
 print('Hello {f_name} {s_name}! You just delved into Python'.format(f_name=a, s_name=b))
 print('Hello {1} {0}! You just delved into Python'.format(a, b))  # выводит переменные по номерам
-print(f'{number = }, {a=}')  # x = 5, a='Anthony'
+print(f'{number = }, {a=}')  # x = 5, a='James'
 print("{:,.2f}".format(10000001.23554))  # 10,000,001.24 (2f - 2 знака после запятой)
 print(f'{100:.2f}')  # 100.00 (отображение целых чисел как вещественных)
 print(f'{number:.2f}')  # 1.67
@@ -429,6 +429,8 @@ print(f"|{number:<25}|")   # |1.6666666666666667       | (< - выравнива
 print(f"|{number:>25}|")   # |       1.6666666666666667| (> - выравнивание по правому краю)
 print(f"|{number:^25}|")   # |   1.6666666666666667    | (^ - выравнивание по центру)
 print(f"|{number:-^25}|")  # |---1.6666666666666667----| (использование символа-заполнителя)
+# Внутри фигурных скобок могут быть ещё одни фигурные скобки для вычисления выражения:
+print(f'{number:?<{int(number * 10)}.3f}')  # 1.667???????????
 
 num = 1000
 print(f'{num:b}')  # 1111101000 (перевод числа в двоичную систему)
