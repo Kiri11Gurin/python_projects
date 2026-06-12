@@ -1849,7 +1849,7 @@ def remove_marks(text, marks):
     return ''.join(c for c in text if c not in marks)
 
 
-remove_marks.count = 0
+remove_marks.count = 0  # либо remove_marks.__dict__['count'] = 0
 marks = '.,!?'
 text = 'Are you listening? Meet my family! There are my parents, my brother and me.'
 for mark in marks:
