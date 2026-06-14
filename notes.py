@@ -1708,7 +1708,7 @@ lst = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 print(list(zip(*[iter(lst)] * 3)))  # [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
 
 
-# КЛЮЧЕВЫЕ СЛОВА GLOBAL & NONLOCAL
+# ОПЕРАТОРЫ GLOBAL & NONLOCAL
 x = 60
 
 
