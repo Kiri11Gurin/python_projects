@@ -3758,34 +3758,6 @@ print(calendar.calendar(2021, w=1, l=1, c=10, m=12))  # календарь на 
 '''
 
 '''
-# ИМПОРТ СОБСТВЕННОГО МОДУЛЯ (другого файла, написанного в python и не только)
-import heat  # при импорте модуля, выполняется код этого модуля только один раз
-import pprint  # pretty print
-pprint.pprint(dir(heat))  # получим список атрибутов модуля, в том числе все переменные
-print(heat)  # <module 'heat' from 'C:\\Users\\Валерий\\PycharmProjects\\untitled1\\heat.py'> (путь модуля)
-'''
-'''
-# from heat import * # звёздочка импортирует все переменные
-# не рекомендуется вызывать все переменные модуля через звёздочку, т. к. может случиться конфликт имён с текущим модулем
-from heat import m, h  # можно импортировать конкретную переменную
-print('m equals', m)  # m equals 20
-print('h equals', h)  # h equals 0.02
-print(globals())  # в словарь включаются импортированные переменные m и h
-print(locals())  # в словарь включаются импортированные переменные m и h
-'''
-'''
-from function import pri as pr  # при импортировании функции скобки с переменными не нужны
-pr(6)
-'''
-'''
-import function as fun  # импортируемый файл имеют имя названия модуля (function)
-fun.pri(5)
-print(__name__)  # основной файл имеет имя __main__
-print(fun.math.pi)  # При таком вызове в модуле function должен быть импортирован модуль math,
-однако лучше напрямую импортировать модуль math в текущем модуле.
-'''
-
-'''
 # МОДУЛЬ SYS
 import sys
 # Поток ввода (sys.stdin) - это специальный объект в программе, куда попадает весь текст, который ввёл пользователь.
@@ -3825,6 +3797,34 @@ print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 344 360 672
 obj = [1, 2, (3, 4), 'text']
 print(obj.__sizeof__(), sys.getsizeof(obj), asizeof.asizeof(obj))  # 72 88 328
 print(asizeof.asized(obj, detail=2).format())  # [1, 2, (3, 4), 'text'] size=328 flat=88
+'''
+
+'''
+# ИМПОРТ СОБСТВЕННОГО МОДУЛЯ (другого файла, написанного в python и не только)
+import heat  # при импорте модуля, выполняется код этого модуля только один раз
+import pprint  # pretty print
+pprint.pprint(dir(heat))  # получим список атрибутов модуля, в том числе все переменные
+print(heat)  # <module 'heat' from 'C:\\Users\\Валерий\\PycharmProjects\\untitled1\\heat.py'> (путь модуля)
+'''
+'''
+# from heat import * # звёздочка импортирует все переменные
+# не рекомендуется вызывать все переменные модуля через звёздочку, т. к. может случиться конфликт имён с текущим модулем
+from heat import m, h  # можно импортировать конкретную переменную
+print('m equals', m)  # m equals 20
+print('h equals', h)  # h equals 0.02
+print(globals())  # в словарь включаются импортированные переменные m и h
+print(locals())  # в словарь включаются импортированные переменные m и h
+'''
+'''
+from function import pri as pr  # при импортировании функции скобки с переменными не нужны
+pr(6)
+'''
+'''
+import function as fun  # импортируемый файл имеют имя названия модуля (function)
+fun.pri(5)
+print(__name__)  # основной файл имеет имя __main__
+print(fun.math.pi)  # При таком вызове в модуле function должен быть импортирован модуль math,
+однако лучше напрямую импортировать модуль math в текущем модуле.
 '''
 
 '''
