@@ -3949,6 +3949,26 @@ file_obhod(given_path)
 '''
 
 '''
+# МОДУЛЬ PATHLIB
+from pathlib import Path
+path = Path(r"C:\\Users\\gurin\\Downloads\\М&Ф\\Музыка\\2-4 Grooves - Writing on the Wall.mp3")
+print(path.parts)
+print(path.stem, path.suffix, path.suffixes)
+print(path.name, path.parent)
+print(path.with_stem('some_music'))
+print(path.with_suffix('.movi'))
+print(path.with_name('anohter_name'))
+print(Path("C:\\Users", "gurin").joinpath("Downloads") / "М&Ф")  # joinpath и / объединяют пути
+'''
+
+'''
+# МОДУЛЬ GLOB
+import glob
+print(glob.glob(r"C:/Users/gurin/Downloads/М&Ф/*.????"))
+print(glob.glob(r"C:/Users/gurin/Downloads/М&Ф/**/*.mp3", recursive=True))  # поиск файлов во всех каталогах
+'''
+
+'''
 # МОДУЛЬ JSON
 # JSON (JavaScript Object Notation) - текстовый формат обмена данными, основанный на языке программирования JavaScript.
 # Парсинг - это автоматизированный сбор и структурирование информации с сайтов при помощи программы или сервиса.
