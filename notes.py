@@ -183,8 +183,9 @@ for _ in range(10):
 
 numbers = [1, 2, 3, 4, 5, 6, 7, 8]
 random.shuffle(numbers)  # перемешать список
-print(numbers)  # [2, 8, 5, 6, 7, 4, 3, 1]  (возможный вариант)
+print(numbers)  # [2, 8, 5, 6, 7, 4, 3, 1] (возможный вариант)
 print(random.sample('BEEGEEK', 2))  # выводит указанное число случайных элементов (список)
+print(random.sample(numbers, k=10, counts=(2, 4, 1, 5, 7, 3, 2, 1)))  # counts - сколько раз можно выбрать каждый элемент последовательности
 print(random.choice('BEEGEEK'))  # выводит случайный элемент
 print(random.choice([1, 2, 3, 4]))  # выводит случайный элемент
 print(random.choice(['a', 'b', 'c', 'd']))  # выводит случайный элемент
@@ -1628,6 +1629,7 @@ print(*[1, 2, 3] + [5, 6, 7], [8, 9])  # 1 2 3 5 6 7 [8, 9]
 pechat = print  # функции можно переназначать (как встроенные, так и самописные)
 pechat('hello')
 
+
 # ВСТРОЕННЫЕ ФУНКЦИИ (BUILT-IN FUNCTION, BUILTINS)
 # Значения аргументов по умолчанию встроенной функции print:
 # sep = ' ' - пробел
@@ -1651,6 +1653,7 @@ code = """for i in range(10):
         print(i)"""
 exec(code)
 
+
 # ВСТРОЕННЫЕ ФУНКЦИИ ALL & ANY
 # Функция all проверяет каждый элемент последовательности на истинность.
 print(all(i.isdigit() for i in '12354635'))  # True (функции all и any работают с итераторами)
@@ -1666,6 +1669,7 @@ print(any([False, 0, 1]))  # True
 print(any(['', [], 'green']))  # True
 print(any([]))  # False
 print(all([]))  # True
+
 
 # ВСТРОЕННЫЕ ФУНКЦИИ ZIP & ENUMERATE (являются итераторами)
 # Количество кортежей, получаемых в ходе функции zip определяется
@@ -1695,6 +1699,7 @@ for num, model in zip(range(len(models)), models):
 
 for num, model in enumerate(models):  # аналогично предыдущей записи
     print(num + 1, 'model is:', model)
+
 
 # ZIP & UNZIP
 a = [1, 2, 3]
@@ -1860,135 +1865,6 @@ print(remove_marks.__dict__)  # {'count': 4}
 print(remove_marks.count)  # 4
 
 
-# ПОЛЕЗНЫЕ ФУНКЦИИ
-def evklid(a: int, b: int) -> int:
-    """Функция находит НОД (наибольший общий делитель), используя алгоритм Евклида.
-    a * b = НОД * НОК"""
-    while b > 0:
-        a, b = b, a % b
-    return a
-
-
-print(evklid(75, 120))
-
-
-def matrix(n=1, m=0, value=0):
-    """Функция создаёт матрицу."""
-    if not m:
-        m = n
-    print(locals())  # список имен, находящихся в локальном пространстве
-    return [[value] * m for _ in range(n)]
-
-
-print(matrix())  # [[0]]
-print(matrix(3))  # [[0, 0, 0], [0, 0, 0], [0, 0, 0]] (n = m если указано только n)
-print(matrix(2, 3, 5))  # [[5, 5, 5], [5, 5, 5]]
-
-
-def chunked(s: str, n: int) -> list:
-    """Функция разбивает строку s на списки длиной n символов."""
-    result = []
-    s = s.split()
-    for i in range(0, len(s), n):
-        print(i)
-        result.append(s[i : i+n])  # отступы в срезе согласно PEP 8 (s[i:i+n] и s[i : i + n] тоже верно)
-    return result
-
-
-print(chunked('a b c d e f r g b', 5))  # [['a', 'b', 'c', 'd', 'e'], ['f', 'r', 'g', 'b']]
-
-
-def binary_search(data, target):
-    """Функция возвращает индекс элемента, осуществляя бинарный поиск."""
-    left, right = 0, len(data) - 1
-    while left <= right:
-        middle = left + (right - left) // 2  # рекомендуется использовать left + (right - left) // 2 вместо
-        elem = data[middle]                  # (left + right) // 2, так как при больших значениях left и right
-        if elem < target:                    # существует риск превышения максимального значения, которое может быть
-            left = middle + 1                # представлено числовым типом, что приведёт к ошибке
-        elif elem > target:
-            right = middle - 1
-        else:
-            return middle
-    return -1
-
-
-def f(x):
-    return x**5 + 5 * x**3 + 3*x - 4
-
-
-def binary_search_2(func):
-    """Вычисление корня уравнения с помощью вещественного бинарного поиска."""
-    left, right = 0, 1
-    epsilon = 0.000001  # не нужен если используется цикл for
-
-    while right - left > epsilon:  # либо: for _ in range(100): (отрезок уменьшится в 2**100 ≈ 10**30 раз)
-        middle = (left + right) / 2
-
-        if f(middle) < 0:
-            left = middle
-        else:
-            right = middle
-    return left
-
-
-print(binary_search_2(f))
-
-
-def rotate90(matrix):
-    n = len(matrix)
-
-    for i in range(n):
-        for j in range(i):
-            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-
-    for i in range(n):
-        for j in range(n // 2):
-            matrix[i][j], matrix[i][~j] = matrix[i][~j], matrix[i][j]  # ~j аналогично n - j - 1 или -j - 1
-
-
-matrix = [[1, 1, 1],
-          [0, 1, 0],
-          [0, 1, 0]]
-
-rotate90(matrix)
-print(*matrix, sep='\n')
-         
-
-def create_matrix(n, m):
-    """Заполнение матрицы по спирали."""
-    matrix = [[0 for _ in range(m)] for _ in range(n)]
-    row, col, drow, dcol = 0, 0, 0, 1
-    for num in range(n * m):
-        matrix[row][col] = num + 1
-        
-        if matrix[(row + drow) % n][(col + dcol) % m]:
-            drow, dcol = dcol, -drow
-            
-        row += drow
-        col += dcol
-
-    return matrix
-
-
-matrix = create_matrix(5, 5)
-print(*matrix, sep='\n')
-
-
-def euler_76(num=100):
-    """Функция считает сколькими различными способами можно записать число в
-    виде суммы натуральных чисел (пример динамического программирования)."""
-    integers = list(range(1, num + 1))
-    ways = [1] + [0] * num
-    for option in integers:
-        for i in range(len(ways) - option):
-            ways[i + option] += ways[i]
-    return ways
-
-
-print(euler_76(100))
-
-
 # АНОНИМНЫЕ ФУНКЦИИ - обычные функции, но записанные в одну строку.
 # Обозначается lambda, её необязательно присваивать переменной (как с def).
 func = lambda a, b: a ** b  # возведение "а" в степень "b"
@@ -1996,6 +1872,7 @@ print(func(2, 3))  # 8
 func = lambda *args: args[0] * args[1]
 print(func(2, 3, 4))  # 6
 print((lambda x, y: x + y)(5, 10))  # 15
+
 
 # ФУНКЦИИ ВЫСШЕГО ПОРЯДКА – функции, которые принимают или/и возвращают другие функции (min, max, sorted, map, filter).
 # ФУНКЦИЯ ВЫСШЕГО ПОРЯДКА MAP (является итератором)
@@ -2106,8 +1983,137 @@ only_letters = list(filter(str.isalpha, chars))
 print(uppered_pets)  # ['ALFRED', 'TABITHA', 'WILLIAM', 'ARLA']
 print(capitalized_pets)  # ['Alfred', 'Tabitha', 'William', 'Arla']
 print(only_letters)  # ['x', 'y', 'a']
+'''
+'''
+# ПОЛЕЗНЫЕ ФУНКЦИИ
+def evklid(a: int, b: int) -> int:
+    """Функция находит НОД (наибольший общий делитель), используя алгоритм Евклида.
+    a * b = НОД * НОК"""
+    while b > 0:
+        a, b = b, a % b
+    return a
 
 
+print(evklid(75, 120))
+
+
+def matrix(n=1, m=0, value=0):
+    """Функция создаёт матрицу."""
+    if not m:
+        m = n
+    print(locals())  # список имен, находящихся в локальном пространстве
+    return [[value] * m for _ in range(n)]
+
+
+print(matrix())  # [[0]]
+print(matrix(3))  # [[0, 0, 0], [0, 0, 0], [0, 0, 0]] (n = m если указано только n)
+print(matrix(2, 3, 5))  # [[5, 5, 5], [5, 5, 5]]
+
+
+def chunked(s: str, n: int) -> list:
+    """Функция разбивает строку s на списки длиной n символов."""
+    result = []
+    s = s.split()
+    for i in range(0, len(s), n):
+        print(i)
+        result.append(s[i: i + n])  # отступы в срезе согласно PEP 8 (s[i:i+n] и s[i : i + n] тоже верно)
+    return result
+
+
+print(chunked('a b c d e f r g b', 5))  # [['a', 'b', 'c', 'd', 'e'], ['f', 'r', 'g', 'b']]
+
+
+def binary_search(data, target):
+    """Функция возвращает индекс элемента, осуществляя бинарный поиск."""
+    left, right = 0, len(data) - 1
+    while left <= right:
+        middle = left + (right - left) // 2  # рекомендуется использовать left + (right - left) // 2 вместо
+        elem = data[middle]  # (left + right) // 2, так как при больших значениях left и right
+        if elem < target:  # существует риск превышения максимального значения, которое может быть
+            left = middle + 1  # представлено числовым типом, что приведёт к ошибке
+        elif elem > target:
+            right = middle - 1
+        else:
+            return middle
+    return -1
+
+
+def f(x):
+    return x ** 5 + 5 * x ** 3 + 3 * x - 4
+
+
+def binary_search_2(func):
+    """Вычисление корня уравнения с помощью вещественного бинарного поиска."""
+    left, right = 0, 1
+    epsilon = 0.000001  # не нужен если используется цикл for
+
+    while right - left > epsilon:  # либо: for _ in range(100): (отрезок уменьшится в 2**100 ≈ 10**30 раз)
+        middle = (left + right) / 2
+
+        if f(middle) < 0:
+            left = middle
+        else:
+            right = middle
+    return left
+
+
+print(binary_search_2(f))
+
+
+def rotate90(matrix):
+    n = len(matrix)
+
+    for i in range(n):
+        for j in range(i):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+    for i in range(n):
+        for j in range(n // 2):
+            matrix[i][j], matrix[i][~j] = matrix[i][~j], matrix[i][j]  # ~j аналогично n - j - 1 или -j - 1
+
+
+matrix = [[1, 1, 1],
+          [0, 1, 0],
+          [0, 1, 0]]
+
+rotate90(matrix)
+print(*matrix, sep='\n')
+
+
+def create_matrix(n, m):
+    """Заполнение матрицы по спирали."""
+    matrix = [[0 for _ in range(m)] for _ in range(n)]
+    row, col, drow, dcol = 0, 0, 0, 1
+    for num in range(n * m):
+        matrix[row][col] = num + 1
+
+        if matrix[(row + drow) % n][(col + dcol) % m]:
+            drow, dcol = dcol, -drow
+
+        row += drow
+        col += dcol
+
+    return matrix
+
+
+matrix = create_matrix(5, 5)
+print(*matrix, sep='\n')
+
+
+def euler_76(num=100):
+    """Функция считает сколькими различными способами можно записать число в
+    виде суммы натуральных чисел (пример динамического программирования)."""
+    integers = list(range(1, num + 1))
+    ways = [1] + [0] * num
+    for option in integers:
+        for i in range(len(ways) - option):
+            ways[i + option] += ways[i]
+    return ways
+
+
+print(euler_76(100))
+'''
+'''
 # ВЛОЖЕННЫЕ ФУНКЦИИ
 # 1-ый способ:
 def generator_square_polynom_1(a, b, c):
@@ -2175,8 +2181,8 @@ print(r2(10))
 print(r2(100))
 print(r2(1000))
 print(r1(10000))
-
-
+'''
+'''
 # ДЕКОРАТОРЫ - это, по сути, "обёртки", которые дают нам возможность изменить поведение функции, не изменяя её код.
 # Аргументы в функции могут меняться и при изменении в такой конструкции будут возникать ошибки,
 # поэтому лучше принять себе за правило: при описании декоратора, все принимаемые параметры,
@@ -2239,7 +2245,7 @@ print(greet('Timur'))
 
 # декоратор, который подсчитывает время выполнения функции
 import time
-def timer(iters=1):
+def timer(iters=100):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -2259,7 +2265,7 @@ def test(n):  # чтобы не создавать лишнюю переменн
     return sum([(i/99) ** 2 for i in range(n)])
 
 
-result = test(10000)  # Среднее время выполнения test: 0.0009 сек.
+result = test(10000)  # Среднее время выполнения test: 0.0007 сек.
 print(f'Результат функции test = {result}')  # Результат функции test = 34005033.67003357
 
 
@@ -2284,7 +2290,6 @@ def beegeek():
 
 beegeek()
 '''
-
 '''
 # РЕКУРСИЯ
 import sys
