@@ -1292,6 +1292,21 @@ print('w' in (s := 'sdfsw'))  # переменную и значение нео�
 print(all((value := number) < 10 for number in [1, 4, 6, 2, 12, 4, 15]))
 print(value)  # 12 (оператор := в этом случае позволит сохранить значение, на котором закончилось выполнение функций)
 '''
+'''
+import weakref
+class User:
+    def __init__(self, user_id):
+        weakref.finalize(self, self._finalizer, user_id)  # создание слабой ссылки
+
+    @staticmethod
+    def _finalizer(user_id):  # метод, который вызывается, когда количество сильных ссылок на объект равняется 0
+        print(f'Удаление пользователя с идентификатором {user_id}')
+
+users = []
+for i in range(100):
+    users.append(User(i))
+print('Конец программы, после неё идёт удаление объектов')
+'''
 
 '''
 # БИТОВЫЕ ОПЕРАЦИИ
