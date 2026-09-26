@@ -3817,6 +3817,11 @@ print(a.__sizeof__(), sys.getsizeof(a), asizeof.asizeof(a))  # 344 360 672
 obj = [1, 2, (3, 4), 'text']
 print(obj.__sizeof__(), sys.getsizeof(obj), asizeof.asizeof(obj))  # 72 88 328
 print(asizeof.asized(obj, detail=2).format())  # [1, 2, (3, 4), 'text'] size=328 flat=88
+
+for i in range(10):
+    print(i)
+    if i == 4:
+        sys.exit(0)  # принудительное завершение программы
 '''
 
 '''
