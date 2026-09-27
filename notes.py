@@ -441,7 +441,7 @@ print(f'{num:X}')  # 3E8 (перевод числа в шестнадцатер�
 print(f'{num:07X}')  # 00003E8 (заполнение нулями с левой стороны до длины строки равной 7)
 '''
 
-'''
+r'''
 # МОДУЛЬ STRING
 import string
 print(string.punctuation)  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
@@ -449,7 +449,7 @@ print(string.ascii_lowercase)  # abcdefghijklmnopqrstuvwxyz
 print(string.ascii_uppercase)  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
 '''
 
-'''
+r'''
 # РЕГУЛЯРНЫЕ ВЫРАЖЕНИЯ (REGEX)
 import re
 
